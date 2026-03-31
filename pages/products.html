@@ -47,12 +47,14 @@ body { font-family: var(--font-body); font-size: 16px; color: var(--gray-900); b
 @keyframes pulse { 0%,100% { box-shadow:0 0 0 0 rgba(201,168,76,0.4); } 50% { box-shadow:0 0 0 12px rgba(201,168,76,0); } }
 
 /* ── SCROLL REVEAL ── */
-.reveal { opacity:0; transform:translateY(36px); transition:opacity .7s var(--ease), transform .7s var(--ease); }
-.reveal.visible { opacity:1; transform:translateY(0); }
-.reveal-left { opacity:0; transform:translateX(-50px); transition:opacity .7s var(--ease), transform .7s var(--ease); }
-.reveal-left.visible { opacity:1; transform:translateX(0); }
-.reveal-right { opacity:0; transform:translateX(50px); transition:opacity .7s var(--ease), transform .7s var(--ease); }
-.reveal-right.visible { opacity:1; transform:translateX(0); }
+/* Reveal: only hide if JS adds .js-reveal-ready to <body> */
+body.js-reveal-ready /* Reveal: only hide if JS adds .js-reveal-ready to <body> */
+body.js-reveal-ready .reveal { opacity:0; transform:translateY(28px); transition:opacity .6s var(--ease), transform .6s var(--ease); }
+body.js-reveal-ready .reveal.visible { opacity:1; transform:translateY(0); }
+body.js-reveal-ready .reveal-left { opacity:0; transform:translateX(-40px); transition:opacity .6s var(--ease), transform .6s var(--ease); }
+body.js-reveal-ready .reveal-left.visible { opacity:1; transform:translateX(0); }
+body.js-reveal-ready .reveal-right { opacity:0; transform:translateX(40px); transition:opacity .6s var(--ease), transform .6s var(--ease); }
+body.js-reveal-ready .reveal-right.visible { opacity:1; transform:translateX(0); }
 .delay-1 { transition-delay:.1s!important; } .delay-2 { transition-delay:.2s!important; }
 .delay-3 { transition-delay:.3s!important; } .delay-4 { transition-delay:.4s!important; }
 .delay-5 { transition-delay:.5s!important; }
@@ -249,14 +251,6 @@ nav {
 .event-link { font-size:.82rem; font-weight:600; color:var(--blue-mid); text-decoration:none; display:flex; align-items:center; gap:4px; transition:color var(--transition),gap var(--transition); }
 .event-link:hover { color:var(--gold); gap:8px; }
 
-/* ── PARTNERS ── */
-.partners-section { background:var(--white); padding:60px 5%; }
-.partners-inner { max-width:1280px; margin:0 auto; text-align:center; }
-.partners-title { font-size:.8rem; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:var(--gray-500); margin-bottom:36px; }
-.partners-logos { display:flex; align-items:center; justify-content:center; gap:48px; flex-wrap:wrap; }
-.partner-logo { height:40px; opacity:.4; filter:grayscale(1); transition:opacity .4s var(--ease),filter .4s var(--ease),transform .4s var(--ease); object-fit:contain; cursor:pointer; }
-.partner-logo:hover { opacity:1; filter:grayscale(0); transform:scale(1.12) translateY(-4px); }
-
 /* ── FOOTER ── */
 footer { background:var(--blue-dark); padding:80px 5% 40px; }
 .footer-inner { max-width:1280px; margin:0 auto; }
@@ -415,6 +409,46 @@ footer { background:var(--blue-dark); padding:80px 5% 40px; }
 .product-card:hover .product-tag {
   background: var(--blue-accent);
   color: var(--white);
+}
+
+
+/* ── OVERFLOW FIX: prevent hover transforms from causing page overflow */
+.about-strip, .section { overflow: hidden; }
+.about-image-wrap { overflow: visible; }
+.about-image-placeholder:hover { transform: scale(1.02); } /* remove rotate that causes overflow */
+.pillar:hover { transform: translateX(3px); }
+.country-card:hover { transform: translateX(3px); }
+.hero-card:hover { transform: translateY(-6px); }
+.product-card:hover { transform: translateY(-6px); }
+
+/* ── HAMBURGER active state */
+.hamburger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.active span:nth-child(2) { opacity: 0; }
+.hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+
+/* ── MOBILE NAV OPEN STATE (robust) */
+@media (max-width:768px) {
+  .nav-links { display:none !important; }
+  .nav-links.open {
+    display:flex !important;
+    flex-direction:column;
+    position:fixed;
+    top:var(--nav-h); left:0; right:0;
+    background:rgba(13,42,74,0.98);
+    backdrop-filter:blur(16px);
+    -webkit-backdrop-filter:blur(16px);
+    padding:20px 5% 32px;
+    border-top:1px solid rgba(255,255,255,0.1);
+    gap:4px;
+    z-index:999;
+    box-shadow:0 8px 32px rgba(0,0,0,0.3);
+    animation:fadeUp .25s ease both;
+  }
+  .nav-links.open li { opacity:1 !important; animation:none !important; }
+  .nav-links.open a { font-size:1rem; padding:12px 16px; border-radius:8px; }
+  .hamburger { display:flex !important; }
+  .hamburger span { transition: transform 0.3s ease, opacity 0.3s ease; }
 }
 
 </style>
@@ -748,7 +782,7 @@ footer { background:var(--blue-dark); padding:80px 5% 40px; }
       </div>
       <div class="product-card reveal" data-cat="veterinary">
         <div class="product-card-img">
-          <img src="../images/chemifarma.png" alt="Tiam – OXI" onerror="this.style.display='none'">
+          <img src="../images/chemifarma.png" onerror="this.style.display='none';this.parentElement.innerHTML='💉';this.parentElement.style.fontSize='2rem'" alt="Tiam – OXI" onerror="this.style.display='none'">
         </div>
         <div class="product-card-body">
           <div class="product-category">💉 Veterinary</div>
@@ -759,7 +793,7 @@ footer { background:var(--blue-dark); padding:80px 5% 40px; }
       </div>
       <div class="product-card reveal" data-cat="veterinary">
         <div class="product-card-img">
-          <img src="../images/FLumechina.png" alt="Flumechina 50%" onerror="this.style.display='none'">
+          <img src="../images/FLumechina.png" onerror="this.style.display='none';this.parentElement.innerHTML='💉';this.parentElement.style.fontSize='2rem'" alt="Flumechina 50%" onerror="this.style.display='none'">
         </div>
         <div class="product-card-body">
           <div class="product-category">💉 Veterinary</div>
@@ -770,7 +804,7 @@ footer { background:var(--blue-dark); padding:80px 5% 40px; }
       </div>
       <div class="product-card reveal" data-cat="veterinary">
         <div class="product-card-img">
-          <img src="../images/Trimethoprim.png" alt="Trimetoprim 40 Sulfadimetossina 200" onerror="this.style.display='none'">
+          <img src="../images/Trimethoprim.png" onerror="this.style.display='none';this.parentElement.innerHTML='💉';this.parentElement.style.fontSize='2rem'" alt="Trimetoprim 40 Sulfadimetossina 200" onerror="this.style.display='none'">
         </div>
         <div class="product-card-body">
           <div class="product-category">💉 Veterinary</div>
@@ -781,7 +815,7 @@ footer { background:var(--blue-dark); padding:80px 5% 40px; }
       </div>
       <div class="product-card reveal" data-cat="feed-additives">
         <div class="product-card-img">
-          <img src="../images/selene.png" alt="Selene" onerror="this.style.display='none'">
+          <img src="../images/selene.png" onerror="this.style.display='none';this.parentElement.innerHTML='💉';this.parentElement.style.fontSize='2rem'" alt="Selene" onerror="this.style.display='none'">
         </div>
         <div class="product-card-body">
           <div class="product-category">⚗️ Feed Additives</div>
@@ -792,7 +826,7 @@ footer { background:var(--blue-dark); padding:80px 5% 40px; }
       </div>
       <div class="product-card reveal" data-cat="veterinary">
         <div class="product-card-img">
-          <img src="../images/AD3E6.png" alt="AD3EC" onerror="this.style.display='none'">
+          <img src="../images/AD3E6.png" onerror="this.style.display='none';this.parentElement.innerHTML='💉';this.parentElement.style.fontSize='2rem'" alt="AD3EC" onerror="this.style.display='none'">
         </div>
         <div class="product-card-body">
           <div class="product-category">💉 Veterinary</div>
@@ -803,7 +837,7 @@ footer { background:var(--blue-dark); padding:80px 5% 40px; }
       </div>
       <div class="product-card reveal" data-cat="veterinary">
         <div class="product-card-img">
-          <img src="../images/fos-calciplus.png" alt="Fos CalciPlus" onerror="this.style.display='none'">
+          <img src="../images/fos-calciplus.png" onerror="this.style.display='none';this.parentElement.innerHTML='💊';this.parentElement.style.fontSize='2rem'" alt="Fos CalciPlus" onerror="this.style.display='none'">
         </div>
         <div class="product-card-body">
           <div class="product-category">💉 Veterinary</div>
@@ -861,7 +895,7 @@ footer { background:var(--blue-dark); padding:80px 5% 40px; }
         <div class="footer-col-title">Contact</div>
         <div class="footer-contact-item"><span class="footer-contact-icon">📍</span>Pigasou 13-15, Aradippou, Larnaca, Cyprus</div>
         <div class="footer-contact-item"><span class="footer-contact-icon">📞</span>+357 24 815084</div>
-        <div class="footer-contact-item"><span class="footer-contact-icon">✉️</span><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="0d64636b624d6c6a7f62606869646e6c236e6260">[email&#160;protected]</a></div>
+        <div class="footer-contact-item"><span class="footer-contact-icon">✉️</span>execution@agromedica.com</div>
       </div>
     </div>
     <div class="footer-bottom">

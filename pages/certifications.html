@@ -47,12 +47,14 @@ body { font-family: var(--font-body); font-size: 16px; color: var(--gray-900); b
 @keyframes pulse { 0%,100% { box-shadow:0 0 0 0 rgba(201,168,76,0.4); } 50% { box-shadow:0 0 0 12px rgba(201,168,76,0); } }
 
 /* ── SCROLL REVEAL ── */
-.reveal { opacity:0; transform:translateY(36px); transition:opacity .7s var(--ease), transform .7s var(--ease); }
-.reveal.visible { opacity:1; transform:translateY(0); }
-.reveal-left { opacity:0; transform:translateX(-50px); transition:opacity .7s var(--ease), transform .7s var(--ease); }
-.reveal-left.visible { opacity:1; transform:translateX(0); }
-.reveal-right { opacity:0; transform:translateX(50px); transition:opacity .7s var(--ease), transform .7s var(--ease); }
-.reveal-right.visible { opacity:1; transform:translateX(0); }
+/* Reveal: only hide if JS adds .js-reveal-ready to <body> */
+body.js-reveal-ready /* Reveal: only hide if JS adds .js-reveal-ready to <body> */
+body.js-reveal-ready .reveal { opacity:0; transform:translateY(28px); transition:opacity .6s var(--ease), transform .6s var(--ease); }
+body.js-reveal-ready .reveal.visible { opacity:1; transform:translateY(0); }
+body.js-reveal-ready .reveal-left { opacity:0; transform:translateX(-40px); transition:opacity .6s var(--ease), transform .6s var(--ease); }
+body.js-reveal-ready .reveal-left.visible { opacity:1; transform:translateX(0); }
+body.js-reveal-ready .reveal-right { opacity:0; transform:translateX(40px); transition:opacity .6s var(--ease), transform .6s var(--ease); }
+body.js-reveal-ready .reveal-right.visible { opacity:1; transform:translateX(0); }
 .delay-1 { transition-delay:.1s!important; } .delay-2 { transition-delay:.2s!important; }
 .delay-3 { transition-delay:.3s!important; } .delay-4 { transition-delay:.4s!important; }
 .delay-5 { transition-delay:.5s!important; }
@@ -433,8 +435,7 @@ footer { background:var(--blue-dark); padding:80px 5% 40px; }
           <li><a href="products.html">Veterinary</a></li>
           <li><a href="products.html">Feed Additives</a></li>
         </ul>
-      </div>
-      <div>
+      ../iv>ge     <div>
         <div class="footer-col-title">Company</div>
         <ul class="footer-links">
           <li><a href="about.html">About Us</a></li>

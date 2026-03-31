@@ -47,12 +47,14 @@ body { font-family: var(--font-body); font-size: 16px; color: var(--gray-900); b
 @keyframes pulse { 0%,100% { box-shadow:0 0 0 0 rgba(201,168,76,0.4); } 50% { box-shadow:0 0 0 12px rgba(201,168,76,0); } }
 
 /* ── SCROLL REVEAL ── */
-.reveal { opacity:0; transform:translateY(36px); transition:opacity .7s var(--ease), transform .7s var(--ease); }
-.reveal.visible { opacity:1; transform:translateY(0); }
-.reveal-left { opacity:0; transform:translateX(-50px); transition:opacity .7s var(--ease), transform .7s var(--ease); }
-.reveal-left.visible { opacity:1; transform:translateX(0); }
-.reveal-right { opacity:0; transform:translateX(50px); transition:opacity .7s var(--ease), transform .7s var(--ease); }
-.reveal-right.visible { opacity:1; transform:translateX(0); }
+/* Reveal: only hide if JS adds .js-reveal-ready to <body> */
+body.js-reveal-ready /* Reveal: only hide if JS adds .js-reveal-ready to <body> */
+body.js-reveal-ready .reveal { opacity:0; transform:translateY(28px); transition:opacity .6s var(--ease), transform .6s var(--ease); }
+body.js-reveal-ready .reveal.visible { opacity:1; transform:translateY(0); }
+body.js-reveal-ready .reveal-left { opacity:0; transform:translateX(-40px); transition:opacity .6s var(--ease), transform .6s var(--ease); }
+body.js-reveal-ready .reveal-left.visible { opacity:1; transform:translateX(0); }
+body.js-reveal-ready .reveal-right { opacity:0; transform:translateX(40px); transition:opacity .6s var(--ease), transform .6s var(--ease); }
+body.js-reveal-ready .reveal-right.visible { opacity:1; transform:translateX(0); }
 .delay-1 { transition-delay:.1s!important; } .delay-2 { transition-delay:.2s!important; }
 .delay-3 { transition-delay:.3s!important; } .delay-4 { transition-delay:.4s!important; }
 .delay-5 { transition-delay:.5s!important; }
@@ -175,9 +177,25 @@ nav {
 .about-strip { background:var(--cream); }
 .about-grid { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; }
 .about-image-wrap { position:relative; }
-.about-image-placeholder { width:100%; aspect-ratio:4/3; background:linear-gradient(135deg,var(--blue-mid),var(--blue-accent)); border-radius:20px; display:grid; place-items:center; font-size:5rem; overflow:hidden; position:relative; transition:transform .6s var(--ease),box-shadow .6s var(--ease); }
+.about-image-placeholder {
+  width:100%;
+  aspect-ratio:4/3;
+  border-radius:20px;
+  overflow:hidden;
+  position:relative;
+  background:linear-gradient(135deg,var(--blue-mid),var(--blue-accent));
+  transition:transform .6s var(--ease),box-shadow .6s var(--ease);
+}
+.about-image-placeholder img {
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+  position:absolute;
+  inset:0;
+}
 .about-image-placeholder:hover { transform:scale(1.02) rotate(.5deg); box-shadow:0 24px 60px rgba(13,42,74,.2); }
-.about-image-placeholder::after { content:''; position:absolute; inset:0; background:url('../images/about-image.jpg') center/cover no-repeat; opacity:.7; border-radius:20px; }
+/* real img used */
 .about-badge { position:absolute; bottom:-20px; right:-20px; background:var(--gold); color:var(--blue-dark); border-radius:16px; padding:20px 24px; text-align:center; box-shadow:0 12px 32px rgba(201,168,76,.35); animation:float 4s ease-in-out infinite; }
 .about-badge-num { font-family:var(--font-display); font-size:2rem; font-weight:900; line-height:1; }
 .about-badge-text { font-size:.72rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; margin-top:4px; }
@@ -332,6 +350,46 @@ footer { background:var(--blue-dark); padding:80px 5% 40px; }
 .nav-logo-text { display: none; }
 .nav-logo-sub  { display: none; }
 
+
+/* ── OVERFLOW FIX: prevent hover transforms from causing page overflow */
+.about-strip, .section, .partners-section { overflow: hidden; }
+.about-image-wrap { overflow: visible; }
+.about-image-placeholder:hover { transform: scale(1.02); } /* remove rotate that causes overflow */
+.pillar:hover { transform: translateX(3px); }
+.country-card:hover { transform: translateX(3px); }
+.hero-card:hover { transform: translateY(-6px); }
+.product-card:hover { transform: translateY(-6px); }
+
+/* ── HAMBURGER active state */
+.hamburger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.active span:nth-child(2) { opacity: 0; }
+.hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+
+/* ── MOBILE NAV OPEN STATE (robust) */
+@media (max-width:768px) {
+  .nav-links { display:none !important; }
+  .nav-links.open {
+    display:flex !important;
+    flex-direction:column;
+    position:fixed;
+    top:var(--nav-h); left:0; right:0;
+    background:rgba(13,42,74,0.98);
+    backdrop-filter:blur(16px);
+    -webkit-backdrop-filter:blur(16px);
+    padding:20px 5% 32px;
+    border-top:1px solid rgba(255,255,255,0.1);
+    gap:4px;
+    z-index:999;
+    box-shadow:0 8px 32px rgba(0,0,0,0.3);
+    animation:fadeUp .25s ease both;
+  }
+  .nav-links.open li { opacity:1 !important; animation:none !important; }
+  .nav-links.open a { font-size:1rem; padding:12px 16px; border-radius:8px; }
+  .hamburger { display:flex !important; }
+  .hamburger span { transition: transform 0.3s ease, opacity 0.3s ease; }
+}
+
 </style>
 </head>
 <body>
@@ -364,7 +422,7 @@ footer { background:var(--blue-dark); padding:80px 5% 40px; }
   <div class="section-inner">
     <div class="about-grid">
       <div class="about-image-wrap">
-        <div class="about-image-placeholder"></div>
+        <div class="about-image-placeholder"><img src="../images/cows_feeding.jpg" alt="Agromedica livestock facility"></div>
         <div class="about-badge">
           <div class="about-badge-num">30+</div>
           <div class="about-badge-text">Years Operating</div>
@@ -487,7 +545,7 @@ footer { background:var(--blue-dark); padding:80px 5% 40px; }
         <div class="footer-col-title">Contact</div>
         <div class="footer-contact-item"><span class="footer-contact-icon">📍</span>Pigasou 13-15, Aradippou, Larnaca, Cyprus</div>
         <div class="footer-contact-item"><span class="footer-contact-icon">📞</span>+357 24 815084</div>
-        <div class="footer-contact-item"><span class="footer-contact-icon">✉️</span><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="375e59515877565045585a52535e54561954585a">[email&#160;protected]</a></div>
+        <div class="footer-contact-item"><span class="footer-contact-icon">✉️</span>execution@agromedica.com</div>
       </div>
     </div>
     <div class="footer-bottom">

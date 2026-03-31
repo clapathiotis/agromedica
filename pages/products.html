@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Products — Agromedica</title>
+  <style>
+/* ── Playfair Display — works offline via system fallback ── */
+:root {
+  --blue-dark: #0d2a4a;
+  --blue-mid: #1a4a7a;
+  --blue-accent: #2970b8;
+  --blue-light: #5a9fd4;
+  --blue-pale: #e8f2fb;
+  --gold: #c9a84c;
+  --gold-light: #e8c87a;
+  --cream: #f5f8fc;
+  --white: #ffffff;
+  --gray-100: #f0f4f8;
+  --gray-200: #dde6ef;
+  --gray-500: #7a8a99;
+  --gray-700: #3d4f60;
+  --gray-900: #111e2d;
+  --font-display: Georgia, 'Times New Roman', serif;
+  --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --nav-h: 80px;
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --transition: 0.3s var(--ease);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-body); font-size: 16px; color: var(--gray-900); background: var(--white); line-height: 1.6; overflow-x: hidden; }
+
+/* ── KEYFRAMES ── */
+@keyframes fadeUp { from { opacity:0; transform:translateY(40px); } to { opacity:1; transform:translateY(0); } }
+@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+@keyframes slideInLeft { from { opacity:0; transform:translateX(-60px); } to { opacity:1; transform:translateX(0); } }
+@keyframes slideInRight { from { opacity:0; transform:translateX(60px); } to { opacity:1; transform:translateX(0); } }
+@keyframes shimmer { 0% { background-position:-200% center; } 100% { background-position:200% center; } }
+@keyframes float { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-14px); } }
+@keyframes spin-slow { from { transform:rotate(0deg); } to { transform:rotate(360deg); } }
+@keyframes nav-drop { from { opacity:0; transform:translateY(-100%); } to { opacity:1; transform:translateY(0); } }
+@keyframes particle { 0% { transform:translateY(0) rotate(0deg); opacity:.6; } 100% { transform:translateY(-100vh) rotate(720deg); opacity:0; } }
+@keyframes gradient-shift { 0%,100% { background-position:0% 50%; } 50% { background-position:100% 50%; } }
+@keyframes bar-grow { from { transform:scaleX(0); } to { transform:scaleX(1); } }
+@keyframes pulse { 0%,100% { box-shadow:0 0 0 0 rgba(201,168,76,0.4); } 50% { box-shadow:0 0 0 12px rgba(201,168,76,0); } }
+
+/* ── SCROLL REVEAL ── */
+.reveal { opacity:0; transform:translateY(36px); transition:opacity .7s var(--ease), transform .7s var(--ease); }
+.reveal.visible { opacity:1; transform:translateY(0); }
+.reveal-left { opacity:0; transform:translateX(-50px); transition:opacity .7s var(--ease), transform .7s var(--ease); }
+.reveal-left.visible { opacity:1; transform:translateX(0); }
+.reveal-right { opacity:0; transform:translateX(50px); transition:opacity .7s var(--ease), transform .7s var(--ease); }
+.reveal-right.visible { opacity:1; transform:translateX(0); }
+.delay-1 { transition-delay:.1s!important; } .delay-2 { transition-delay:.2s!important; }
+.delay-3 { transition-delay:.3s!important; } .delay-4 { transition-delay:.4s!important; }
+.delay-5 { transition-delay:.5s!important; }
+
+/* ── NAV ── */
+nav {
+  position:fixed; top:0; left:0; right:0; height:var(--nav-h);
+  background:rgba(13,42,74,0.97);
+  backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 5%; z-index:1000;
+  box-shadow:0 2px 24px rgba(0,0,0,0.25);
+  animation:nav-drop .6s var(--ease) both;
+}
+.nav-logo { display:flex; align-items:center; gap:12px; text-decoration:none; transition:opacity var(--transition); }
+.nav-logo:hover { opacity:.85; }
+.nav-logo-icon {
+  width:44px; height:44px; background:var(--gold); border-radius:10px;
+  display:grid; place-items:center; font-size:20px;
+  transition:transform var(--transition), box-shadow var(--transition);
+}
+.nav-logo:hover .nav-logo-icon { transform:rotate(-8deg) scale(1.1); box-shadow:0 6px 18px rgba(201,168,76,.5); }
+.nav-logo-text { font-family:var(--font-display); font-size:1.4rem; font-weight:700; color:var(--white); letter-spacing:.02em; display:block; }
+.nav-logo-sub { display:block; font-size:.6rem; font-weight:400; letter-spacing:.18em; text-transform:uppercase; color:var(--gold-light); line-height:1; }
+.nav-links { display:flex; align-items:center; gap:4px; list-style:none; }
+.nav-links li { opacity:0; animation:fadeIn .4s var(--ease) forwards; }
+.nav-links li:nth-child(1){animation-delay:.15s} .nav-links li:nth-child(2){animation-delay:.22s}
+.nav-links li:nth-child(3){animation-delay:.29s} .nav-links li:nth-child(4){animation-delay:.36s}
+.nav-links li:nth-child(5){animation-delay:.43s} .nav-links li:nth-child(6){animation-delay:.5s}
+.nav-links li:nth-child(7){animation-delay:.57s}
+.nav-links a {
+  font-size:.83rem; font-weight:500; letter-spacing:.07em; text-transform:uppercase;
+  color:rgba(255,255,255,.75); text-decoration:none;
+  padding:8px 13px; border-radius:7px; display:block; position:relative;
+  transition:color var(--transition), background var(--transition);
+}
+.nav-links a::after {
+  content:''; position:absolute; bottom:4px; left:13px; right:13px;
+  height:2px; background:var(--gold); border-radius:2px;
+  transform:scaleX(0); transform-origin:center;
+  transition:transform var(--transition);
+}
+.nav-links a:hover, .nav-links a.active { color:var(--white); background:rgba(255,255,255,.09); }
+.nav-links a:hover::after, .nav-links a.active::after { transform:scaleX(1); }
+.nav-cta { background:var(--gold)!important; color:var(--blue-dark)!important; font-weight:700!important; border-radius:8px!important; box-shadow:0 3px 12px rgba(201,168,76,.35)!important; }
+.nav-cta:hover { background:var(--gold-light)!important; transform:translateY(-2px)!important; box-shadow:0 6px 20px rgba(201,168,76,.5)!important; }
+.nav-cta::after { display:none!important; }
+.hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; padding:8px; border:none; background:transparent; }
+.hamburger span { display:block; width:24px; height:2px; background:var(--white); border-radius:2px; transition:var(--transition); }
+
+/* ── HERO ── */
+.hero { min-height:100vh; padding-top:var(--nav-h); position:relative; display:flex; align-items:center; overflow:hidden; background:var(--blue-dark); }
+.hero-bg {
+  position:absolute; inset:0;
+  background: radial-gradient(ellipse 80% 60% at 70% 40%, rgba(41,112,184,.22) 0%, transparent 60%),
+              radial-gradient(ellipse 60% 80% at 10% 80%, rgba(201,168,76,.1) 0%, transparent 50%),
+              linear-gradient(135deg,#060f1e 0%,#0d2a4a 50%,#0a1e38 100%);
+  background-size:200% 200%; animation:gradient-shift 12s ease infinite;
+}
+.hero-particles { position:absolute; inset:0; overflow:hidden; pointer-events:none; }
+.hero-particles span { position:absolute; bottom:-20px; width:6px; height:6px; border-radius:50%; background:rgba(201,168,76,.4); animation:particle linear infinite; }
+.hero-particles span:nth-child(1){left:10%;animation-duration:14s;animation-delay:0s;width:4px;height:4px}
+.hero-particles span:nth-child(2){left:25%;animation-duration:18s;animation-delay:2s;width:7px;height:7px;background:rgba(90,159,212,.3)}
+.hero-particles span:nth-child(3){left:40%;animation-duration:12s;animation-delay:4s;width:3px;height:3px}
+.hero-particles span:nth-child(4){left:60%;animation-duration:20s;animation-delay:1s;width:8px;height:8px;background:rgba(90,159,212,.25)}
+.hero-particles span:nth-child(5){left:75%;animation-duration:16s;animation-delay:3s;width:5px;height:5px}
+.hero-particles span:nth-child(6){left:88%;animation-duration:11s;animation-delay:5s;width:3px;height:3px;background:rgba(232,200,122,.5)}
+.hero-grid {
+  position:absolute; inset:0;
+  background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
+  background-size:60px 60px; animation:fadeIn 2s ease both .8s; opacity:0;
+}
+.hero-content {
+  position:relative; z-index:2; max-width:1280px; margin:0 auto;
+  padding:80px 5%; display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; width:100%;
+}
+.hero-badge {
+  display:inline-flex; align-items:center; gap:8px;
+  background:rgba(201,168,76,.15); border:1px solid rgba(201,168,76,.35);
+  color:var(--gold-light); font-size:.75rem; font-weight:600; letter-spacing:.15em; text-transform:uppercase;
+  padding:8px 18px; border-radius:100px; margin-bottom:24px;
+  animation:fadeUp .7s var(--ease) both .3s; position:relative; overflow:hidden;
+}
+.hero-badge::after { content:''; position:absolute; inset:0; background:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent); background-size:200% 100%; animation:shimmer 2.5s ease infinite; }
+.hero-title { font-family:var(--font-display); font-size:clamp(2.4rem,5vw,4rem); font-weight:700; color:var(--white); line-height:1.15; margin-bottom:24px; animation:fadeUp .7s var(--ease) both .5s; }
+.hero-title em { font-style:normal; color:var(--gold); }
+.hero-desc { font-size:1.05rem; color:rgba(255,255,255,.65); line-height:1.8; margin-bottom:40px; max-width:480px; animation:fadeUp .7s var(--ease) both .65s; }
+.hero-actions { display:flex; gap:16px; flex-wrap:wrap; animation:fadeUp .7s var(--ease) both .8s; }
+.hero-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:56px; padding-top:40px; border-top:1px solid rgba(255,255,255,.1); animation:fadeUp .7s var(--ease) both .95s; }
+.hero-stat-num { font-family:var(--font-display); font-size:2.2rem; font-weight:700; color:var(--gold); line-height:1; }
+.hero-stat-label { font-size:.78rem; color:rgba(255,255,255,.5); font-weight:400; letter-spacing:.05em; margin-top:6px; }
+.hero-visual { animation:slideInRight .9s var(--ease) both .6s; }
+.hero-cards { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.hero-card { background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1); border-radius:16px; padding:28px 24px; transition:background var(--transition),border-color var(--transition),transform .4s var(--ease),box-shadow .4s var(--ease); text-decoration:none; display:block; }
+.hero-card:hover { background:rgba(255,255,255,.11); border-color:rgba(201,168,76,.45); transform:translateY(-8px); box-shadow:0 20px 48px rgba(0,0,0,.3); }
+.hero-card:first-child { grid-column:1/-1; background:rgba(201,168,76,.1); border-color:rgba(201,168,76,.25); }
+.hero-card:first-child:hover { background:rgba(201,168,76,.17); border-color:rgba(201,168,76,.55); }
+.hero-card-icon { font-size:2rem; margin-bottom:12px; transition:transform .4s var(--ease); }
+.hero-card:hover .hero-card-icon { transform:scale(1.25) rotate(-5deg); }
+.hero-card-title { font-family:var(--font-display); font-size:1.1rem; font-weight:600; color:var(--white); margin-bottom:6px; }
+.hero-card-desc { font-size:.82rem; color:rgba(255,255,255,.5); line-height:1.5; }
+
+/* ── BUTTONS ── */
+.btn-primary { display:inline-flex; align-items:center; gap:8px; background:var(--gold); color:var(--blue-dark); font-family:var(--font-body); font-weight:700; font-size:.9rem; letter-spacing:.04em; padding:14px 28px; border-radius:8px; text-decoration:none; transition:background var(--transition),transform var(--transition),box-shadow var(--transition); border:none; cursor:pointer; }
+.btn-primary:hover { background:var(--gold-light); transform:translateY(-3px); box-shadow:0 10px 28px rgba(201,168,76,.4); }
+.btn-primary:active { transform:translateY(-1px); }
+.btn-outline { display:inline-flex; align-items:center; gap:8px; background:transparent; color:var(--white); font-family:var(--font-body); font-weight:500; font-size:.9rem; padding:14px 28px; border-radius:8px; text-decoration:none; border:1.5px solid rgba(255,255,255,.28); transition:border-color var(--transition),background var(--transition),transform var(--transition); cursor:pointer; }
+.btn-outline:hover { border-color:rgba(255,255,255,.65); background:rgba(255,255,255,.07); transform:translateY(-2px); }
+
+/* ── SECTIONS ── */
+.section { padding:100px 5%; }
+.section-inner { max-width:1280px; margin:0 auto; }
+.section-label { display:inline-flex; align-items:center; gap:10px; font-size:.72rem; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:var(--blue-accent); margin-bottom:16px; }
+.section-label::before { content:''; width:24px; height:2px; background:var(--blue-accent); border-radius:2px; display:block; transform-origin:left; }
+.section-title { font-family:var(--font-display); font-size:clamp(1.8rem,3.5vw,2.8rem); font-weight:700; color:var(--blue-dark); line-height:1.25; margin-bottom:20px; }
+.section-title.light { color:var(--white); }
+.section-desc { font-size:1rem; color:var(--gray-500); line-height:1.8; max-width:600px; }
+
+/* ── ABOUT ── */
+.about-strip { background:var(--cream); }
+.about-grid { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; }
+.about-image-wrap { position:relative; }
+.about-image-placeholder { width:100%; aspect-ratio:4/3; background:linear-gradient(135deg,var(--blue-mid),var(--blue-accent)); border-radius:20px; display:grid; place-items:center; font-size:5rem; overflow:hidden; position:relative; transition:transform .6s var(--ease),box-shadow .6s var(--ease); }
+.about-image-placeholder:hover { transform:scale(1.02) rotate(.5deg); box-shadow:0 24px 60px rgba(13,42,74,.2); }
+.about-image-placeholder::after { content:''; position:absolute; inset:0; background:url('../images/about-image.jpg') center/cover no-repeat; opacity:.7; border-radius:20px; }
+.about-badge { position:absolute; bottom:-20px; right:-20px; background:var(--gold); color:var(--blue-dark); border-radius:16px; padding:20px 24px; text-align:center; box-shadow:0 12px 32px rgba(201,168,76,.35); animation:float 4s ease-in-out infinite; }
+.about-badge-num { font-family:var(--font-display); font-size:2rem; font-weight:900; line-height:1; }
+.about-badge-text { font-size:.72rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; margin-top:4px; }
+.about-pillars { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:32px; }
+.pillar { background:var(--white); border-radius:12px; padding:20px; border-left:3px solid var(--blue-accent); transition:transform var(--transition),box-shadow var(--transition),border-color var(--transition); }
+.pillar:hover { transform:translateX(5px); box-shadow:0 8px 24px rgba(13,42,74,.1); border-color:var(--gold); }
+.pillar-icon { font-size:1.4rem; margin-bottom:8px; transition:transform var(--transition); }
+.pillar:hover .pillar-icon { transform:scale(1.3); }
+.pillar-title { font-weight:600; font-size:.9rem; color:var(--blue-dark); margin-bottom:4px; }
+.pillar-text { font-size:.8rem; color:var(--gray-500); line-height:1.5; }
+
+/* ── PRODUCTS ── */
+.products-section { background:var(--white); }
+.product-filters { display:flex; gap:10px; flex-wrap:wrap; margin:32px 0; }
+.filter-btn { padding:8px 18px; border-radius:100px; border:1.5px solid var(--gray-200); background:transparent; font-family:var(--font-body); font-size:.82rem; font-weight:500; color:var(--gray-700); cursor:pointer; transition:background var(--transition),border-color var(--transition),color var(--transition),transform var(--transition); }
+.filter-btn:hover { transform:translateY(-2px); }
+.filter-btn:hover,.filter-btn.active { background:var(--blue-mid); border-color:var(--blue-mid); color:var(--white); }
+.products-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:24px; }
+.product-card { background:var(--cream); border-radius:16px; overflow:hidden; border:1px solid var(--gray-200); transition:transform .4s var(--ease),box-shadow .4s var(--ease),border-color var(--transition); text-decoration:none; display:block; }
+.product-card:hover { transform:translateY(-8px) scale(1.01); box-shadow:0 24px 52px rgba(13,42,74,.13); border-color:var(--blue-light); }
+.product-card-header { padding:32px; display:flex; align-items:center; gap:16px; }
+.product-icon { width:60px; height:60px; border-radius:12px; display:grid; place-items:center; font-size:1.8rem; flex-shrink:0; transition:transform .4s var(--ease); }
+.product-card:hover .product-icon { transform:rotate(-8deg) scale(1.15); }
+.product-card-body { padding:0 32px 32px; }
+.product-category { font-size:.7rem; font-weight:700; letter-spacing:.15em; text-transform:uppercase; color:var(--blue-accent); margin-bottom:6px; }
+.product-name { font-family:var(--font-display); font-size:1.15rem; font-weight:600; color:var(--blue-dark); margin-bottom:10px; line-height:1.3; }
+.product-desc { font-size:.85rem; color:var(--gray-500); line-height:1.6; }
+.product-tag { display:inline-block; margin-top:14px; font-size:.75rem; font-weight:600; color:var(--blue-accent); background:rgba(41,112,184,.1); border-radius:100px; padding:4px 12px; transition:background var(--transition),color var(--transition); }
+.product-card:hover .product-tag { background:var(--blue-accent); color:var(--white); }
+
+/* ── EXPORT ── */
+.export-section { background:linear-gradient(135deg,var(--blue-dark) 0%,var(--blue-mid) 100%); position:relative; overflow:hidden; }
+.export-section::before { content:''; position:absolute; top:-40%; right:-15%; width:600px; height:600px; border-radius:50%; background:rgba(255,255,255,.03); animation:spin-slow 40s linear infinite; pointer-events:none; }
+.export-grid { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:start; }
+.export-countries { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:32px; }
+.country-card { background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.12); border-radius:12px; padding:18px 20px; display:flex; align-items:center; gap:12px; transition:background var(--transition),border-color var(--transition),transform var(--transition); cursor:default; }
+.country-card:hover { background:rgba(255,255,255,.13); border-color:rgba(201,168,76,.45); transform:translateX(5px); }
+.country-flag { font-size:1.6rem; transition:transform var(--transition); }
+.country-card:hover .country-flag { transform:scale(1.2); }
+.country-name { font-weight:600; font-size:.9rem; color:var(--white); }
+.country-detail { font-size:.75rem; color:rgba(255,255,255,.5); margin-top:2px; }
+.hq-card { background:rgba(201,168,76,.12); border:1px solid rgba(201,168,76,.3); border-radius:16px; padding:32px; margin-top:32px; transition:background var(--transition),border-color var(--transition); }
+.hq-card:hover { background:rgba(201,168,76,.18); border-color:rgba(201,168,76,.5); }
+.hq-card h4 { font-family:var(--font-display); font-size:1.2rem; color:var(--gold); margin-bottom:16px; }
+.hq-detail { display:flex; align-items:flex-start; gap:10px; margin-bottom:12px; font-size:.88rem; color:rgba(255,255,255,.7); }
+.hq-icon { font-size:1rem; flex-shrink:0; margin-top:2px; color:var(--gold-light); }
+
+/* ── EVENTS ── */
+.events-section { background:var(--gray-100); }
+.events-tabs { display:flex; margin:32px 0; border-radius:10px; overflow:hidden; border:1.5px solid var(--gray-200); width:fit-content; }
+.events-tab { padding:10px 24px; font-family:var(--font-body); font-size:.85rem; font-weight:600; border:none; background:var(--white); color:var(--gray-500); cursor:pointer; transition:background var(--transition),color var(--transition); }
+.events-tab.active { background:var(--blue-mid); color:var(--white); }
+.events-tab:hover:not(.active) { background:var(--gray-200); }
+.events-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(340px,1fr)); gap:24px; }
+.event-card { background:var(--white); border-radius:16px; overflow:hidden; border:1px solid var(--gray-200); transition:transform .4s var(--ease),box-shadow .4s var(--ease); display:flex; flex-direction:column; }
+.event-card:hover { transform:translateY(-6px); box-shadow:0 20px 48px rgba(13,42,74,.12); }
+.event-card-banner { height:6px; background:var(--blue-accent); }
+.event-card-banner.upcoming { background:var(--gold); }
+.event-card-banner.past { background:var(--gray-500); }
+.event-card-body { padding:28px; flex:1; }
+.event-date-badge { display:inline-flex; align-items:center; gap:6px; font-size:.75rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; padding:6px 12px; border-radius:100px; margin-bottom:16px; }
+.event-date-badge.upcoming { background:rgba(201,168,76,.12); color:#1a5a8a; }
+.event-date-badge.past { background:var(--gray-200); color:var(--gray-500); }
+.event-name { font-family:var(--font-display); font-size:1.2rem; font-weight:700; color:var(--blue-dark); margin-bottom:8px; line-height:1.3; }
+.event-location { font-size:.85rem; color:var(--gray-500); display:flex; align-items:center; gap:6px; margin-bottom:12px; }
+.event-desc { font-size:.85rem; color:var(--gray-700); line-height:1.6; }
+.event-card-footer { padding:16px 28px; border-top:1px solid var(--gray-200); display:flex; align-items:center; justify-content:space-between; }
+.event-type-tag { font-size:.72rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--blue-accent); }
+.event-link { font-size:.82rem; font-weight:600; color:var(--blue-mid); text-decoration:none; display:flex; align-items:center; gap:4px; transition:color var(--transition),gap var(--transition); }
+.event-link:hover { color:var(--gold); gap:8px; }
+
+/* ── PARTNERS ── */
+.partners-section { background:var(--white); padding:60px 5%; }
+.partners-inner { max-width:1280px; margin:0 auto; text-align:center; }
+.partners-title { font-size:.8rem; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:var(--gray-500); margin-bottom:36px; }
+.partners-logos { display:flex; align-items:center; justify-content:center; gap:48px; flex-wrap:wrap; }
+.partner-logo { height:40px; opacity:.4; filter:grayscale(1); transition:opacity .4s var(--ease),filter .4s var(--ease),transform .4s var(--ease); object-fit:contain; cursor:pointer; }
+.partner-logo:hover { opacity:1; filter:grayscale(0); transform:scale(1.12) translateY(-4px); }
+
+/* ── FOOTER ── */
+footer { background:var(--blue-dark); padding:80px 5% 40px; }
+.footer-inner { max-width:1280px; margin:0 auto; }
+.footer-grid { display:grid; grid-template-columns:1.5fr 1fr 1fr 1fr; gap:48px; padding-bottom:48px; border-bottom:1px solid rgba(255,255,255,.1); }
+.footer-brand-name { font-family:var(--font-display); font-size:1.4rem; font-weight:700; color:var(--white); margin:16px 0 12px; }
+.footer-brand-desc { font-size:.85rem; color:rgba(255,255,255,.45); line-height:1.7; }
+.footer-col-title { font-size:.72rem; font-weight:700; letter-spacing:.15em; text-transform:uppercase; color:var(--gold); margin-bottom:20px; }
+.footer-links { list-style:none; display:flex; flex-direction:column; gap:10px; }
+.footer-links a { font-size:.88rem; color:rgba(255,255,255,.5); text-decoration:none; transition:color var(--transition),padding-left var(--transition); }
+.footer-links a:hover { color:var(--white); padding-left:6px; }
+.footer-contact-item { display:flex; gap:10px; margin-bottom:12px; font-size:.85rem; color:rgba(255,255,255,.5); }
+.footer-contact-icon { color:var(--gold-light); flex-shrink:0; }
+.footer-bottom { display:flex; align-items:center; justify-content:space-between; padding-top:32px; font-size:.8rem; color:rgba(255,255,255,.3); flex-wrap:wrap; gap:12px; }
+
+/* ── PAGE HEADER ── */
+.page-header { padding:calc(var(--nav-h) + 60px) 5% 80px; background:linear-gradient(135deg,var(--blue-dark) 0%,var(--blue-mid) 100%); position:relative; overflow:hidden; }
+.page-header::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 70% 70% at 80% 50%,rgba(201,168,76,.08),transparent 60%),linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px); background-size:auto,50px 50px,50px 50px; }
+.page-header-inner { max-width:1280px; margin:0 auto; position:relative; z-index:1; }
+.page-header-title { font-family:var(--font-display); font-size:clamp(2rem,5vw,3.5rem); font-weight:700; color:var(--white); margin-bottom:16px; animation:slideInLeft .7s var(--ease) both .2s; }
+.page-header-desc { font-size:1.05rem; color:rgba(255,255,255,.6); max-width:580px; line-height:1.7; animation:slideInLeft .7s var(--ease) both .35s; }
+.breadcrumb { display:flex; align-items:center; gap:8px; font-size:.8rem; color:rgba(255,255,255,.4); margin-bottom:20px; animation:fadeIn .6s var(--ease) both .1s; }
+.breadcrumb a { color:var(--gold-light); text-decoration:none; transition:color var(--transition); }
+.breadcrumb a:hover { color:var(--gold); }
+
+/* ── CERTS ── */
+.certs-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:24px; margin-top:40px; }
+.cert-card { background:var(--cream); border:1px solid var(--gray-200); border-radius:16px; padding:32px; text-align:center; transition:transform .4s var(--ease),box-shadow .4s var(--ease),border-color var(--transition); }
+.cert-card:hover { transform:translateY(-6px) scale(1.02); box-shadow:0 16px 40px rgba(13,42,74,.1); border-color:var(--blue-light); }
+.cert-icon { font-size:2.5rem; margin-bottom:16px; transition:transform .4s var(--ease); }
+.cert-card:hover .cert-icon { transform:rotate(-10deg) scale(1.3); }
+.cert-name { font-family:var(--font-display); font-size:1.1rem; font-weight:600; color:var(--blue-dark); margin-bottom:8px; }
+.cert-desc { font-size:.82rem; color:var(--gray-500); line-height:1.6; }
+
+/* ── CONTACT ── */
+.contact-grid { display:grid; grid-template-columns:1fr 1.4fr; gap:64px; align-items:start; }
+.contact-form { background:var(--cream); border-radius:20px; padding:48px; }
+.form-row { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+.form-group { margin-bottom:20px; }
+.form-group label { display:block; font-size:.82rem; font-weight:600; color:var(--blue-dark); margin-bottom:8px; }
+.form-group input,.form-group select,.form-group textarea { width:100%; padding:12px 16px; border:1.5px solid var(--gray-200); border-radius:8px; font-family:var(--font-body); font-size:.9rem; color:var(--gray-900); background:var(--white); transition:border-color var(--transition),box-shadow var(--transition); outline:none; }
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus { border-color:var(--blue-accent); box-shadow:0 0 0 3px rgba(41,112,184,.12); }
+.form-group textarea { resize:vertical; min-height:120px; }
+
+/* ── RESPONSIVE ── */
+@media (max-width:1024px) {
+  .hero-content,.about-grid,.export-grid,.contact-grid { grid-template-columns:1fr; gap:48px; }
+  .footer-grid { grid-template-columns:1fr 1fr; }
+}
+@media (max-width:768px) {
+  .nav-links { display:none; }
+  .hamburger { display:flex; }
+  .nav-links.open { display:flex; flex-direction:column; position:fixed; top:var(--nav-h); left:0; right:0; background:rgba(13,42,74,.98); backdrop-filter:blur(16px); padding:24px 5%; border-top:1px solid rgba(255,255,255,.1); gap:4px; animation:fadeUp .3s var(--ease) both; }
+  .nav-links.open li { opacity:1; animation:none; }
+  .hero-stats { grid-template-columns:1fr 1fr; }
+  .about-pillars { grid-template-columns:1fr; }
+  .export-countries { grid-template-columns:1fr; }
+  .footer-grid { grid-template-columns:1fr; gap:32px; }
+  .form-row { grid-template-columns:1fr; }
+  .contact-form { padding:28px; }
+}
+
+
+.nav-logo-img {
+  height: 44px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+  transition: opacity 0.3s ease;
+}
+.nav-logo:hover .nav-logo-img { opacity: 0.85; }
+/* Remove old icon styles that no longer apply */
+.nav-logo-icon { display: none; }
+.nav-logo-text { display: none; }
+.nav-logo-sub  { display: none; }
+
+
+/* ── Product cards with real images ── */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+}
+.product-card {
+  background: var(--white);
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--gray-200);
+  transition: transform .4s var(--ease), box-shadow .4s var(--ease), border-color var(--transition);
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  cursor: default;
+}
+.product-card:hover {
+  transform: translateY(-8px) scale(1.01);
+  box-shadow: 0 24px 52px rgba(13,42,74,.13);
+  border-color: var(--blue-light);
+}
+.product-card-img {
+  background: var(--cream);
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  border-bottom: 1px solid var(--gray-200);
+  overflow: hidden;
+}
+.product-card-img img {
+  max-height: 140px;
+  max-width: 100%;
+  object-fit: contain;
+  transition: transform .4s var(--ease);
+}
+.product-card:hover .product-card-img img { transform: scale(1.08); }
+.product-card-body {
+  padding: 20px 24px 24px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.product-category {
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--blue-accent);
+  margin-bottom: 8px;
+}
+.product-name {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--blue-dark);
+  margin-bottom: 10px;
+  line-height: 1.35;
+}
+.product-desc {
+  font-size: .82rem;
+  color: var(--gray-500);
+  line-height: 1.6;
+  flex: 1;
+}
+.product-tag {
+  display: inline-block;
+  margin-top: 14px;
+  font-size: .72rem;
+  font-weight: 600;
+  color: var(--blue-accent);
+  background: rgba(41,112,184,0.1);
+  border-radius: 100px;
+  padding: 4px 12px;
+  transition: background var(--transition), color var(--transition);
+  align-self: flex-start;
+}
+.product-card:hover .product-tag {
+  background: var(--blue-accent);
+  color: var(--white);
+}
+
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="../index.html" class="nav-logo">
+    <img src="../images/agromedica-logo.png" alt="Agromedica" class="nav-logo-img">
+  </a>
+  <ul class="nav-links">
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="products.html" class="active">Products</a></li>
+    <li><a href="export.html">Export</a></li>
+    <li><a href="events.html">Events</a></li>
+    <li><a href="certifications.html">Certifications</a></li>
+    <li><a href="contact.html" class="nav-cta">Contact Us</a></li>
+  </ul>
+  <div class="hamburger"><span></span><span></span><span></span></div>
+</nav>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <div class="breadcrumb"><a href="../index.html">Home</a> › Products</div>
+    <h1 class="page-header-title">Our Product Range</h1>
+    <p class="page-header-desc">Standard and custom-made vitamin and mineral premixes, feed additives, and veterinary products for every production animal species.</p>
+  </div>
+</div>
+
+<section class="section products-section">
+  <div class="section-inner">
+    <div class="product-filters">
+      <button class="filter-btn active" data-cat="all">All Products</button>
+      <button class="filter-btn" data-cat="ruminants">🐄 Ruminants</button>
+      <button class="filter-btn" data-cat="poultry">🐔 Poultry</button>
+      <button class="filter-btn" data-cat="swine">🐖 Swine</button>
+      <button class="filter-btn" data-cat="veterinary">💉 Veterinary</button>
+      <button class="filter-btn" data-cat="feed-additives">⚗️ Feed Additives</button>
+      <button class="filter-btn" data-cat="feed-raw-materials">🌾 Feed Raw Materials</button>
+      <button class="filter-btn" data-cat="companion-animals">🐾 Companion Animals</button>
+    </div>
+
+    <div class="products-grid">
+
+      <div class="product-card reveal" data-cat="swine">
+        <div class="product-card-img">
+          <img src="../images/orange-bag.png" alt="Vitamin & Mineral Premix for Swine" onerror="this.style.display='none'">
+        </div>
+        <div class="product-card-body">
+          <div class="product-category">🐖 Swine</div>
+          <div class="product-name">Vitamin & Mineral Premix for Swine</div>
+          <div class="product-desc">High-quality tailor-made or standard vitamin and mineral premix for swine. Covers all stages from piglets through to finishing and breeding sows.</div>
+          <span class="product-tag">Orange Bag Series</span>
+        </div>
+      </div>
+      <div class="product-card reveal" data-cat="poultry">
+        <div class="product-card-img">
+          <img src="../images/green-bag.png" alt="Vitamin & Mineral Premix for Poultry" onerror="this.style.display='none'">
+        </div>
+        <div class="product-card-body">
+          <div class="product-category">🐔 Poultry</div>
+          <div class="product-name">Vitamin & Mineral Premix for Poultry</div>
+          <div class="product-desc">Optimised vitamin and mineral blends for broilers, layers, turkeys and other poultry. Maximises performance, egg production and flock health.</div>
+          <span class="product-tag">Green Bag Series</span>
+        </div>
+      </div>
+      <div class="product-card reveal" data-cat="ruminants">
+        <div class="product-card-img">
+          <img src="../images/blue-bag.png" alt="Vitamin & Mineral Premix for Ruminants" onerror="this.style.display='none'">
+        </div>
+        <div class="product-card-body">
+          <div class="product-category">🐄 Ruminants</div>
+          <div class="product-name">Vitamin & Mineral Premix for Ruminants</div>
+          <div class="product-desc">Balanced premix formulations for dairy cattle, beef cattle, sheep and goats. Standard or custom compositions available to your specification.</div>
+          <span class="product-tag">Blue Bag Series</span>
+        </div>
+      </div>
+      <div class="product-card reveal" data-cat="ruminants">
+        <div class="product-card-img">
+          <img src="../images/sprayfo-primo.png" alt="Sprayfo Primo for Lambs and Kids" onerror="this.style.display='none'">
+        </div>
+        <div class="product-card-body">
+          <div class="product-category">🐄 Ruminants</div>
+          <div class="product-name">Sprayfo Primo for Lambs and Kids</div>
+          <div class="product-desc">Premium milk replacer specifically formulated for lambs and kids, supporting optimal growth and development during the early stages of life.</div>
+          <span class="product-tag">Milk Replacer</span>
+        </div>
+      </div>
+      <div class="product-card reveal" data-cat="ruminants">
+        <div class="product-card-img">
+          <img src="../images/sprayfoblue_tn.png" alt="Sprayfo Blue for Calves" onerror="this.style.display='none'">
+        </div>
+        <div class="product-card-body">
+          <div class="product-category">🐄 Ruminants</div>
+          <div class="product-name">Sprayfo Blue for Calves</div>
+          <div class="product-desc">High-quality milk replacer for calves providing balanced nutrition to support healthy growth and development from birth through to weaning.</div>
+          <span class="product-tag">Milk Replacer</span>
+        </div>
+      </div>
+      <div class="product-card reveal" data-cat="swine">
+        <div class="product-card-img">
+          <img src="../images/50549-tn-nuklospray-zak-red.png" alt="Nuklospray Yoghurt for Piglets" onerror="this.style.display='none'">
+        </div>
+        <div class="product-card-body">
+          <div class="product-category">🐖 Swine</div>
+          <div class="product-name">Nuklospray Yoghurt for Piglets</div>
+          <div class="product-desc">Yoghurt-based milk replacer for piglets offering excellent palatability and digestibility for optimal early-life nutrition and growth.</div>
+          <span class="product-tag">Milk Replacer</span>
+        </div>
+      </div>
+      <div class="product-card reveal" data-cat="swine">
+        <div class="product-card-img">
+          <img src="../images/50549-TN-Nuklospray-zak-blue.png" alt="Nuklospray P30 for Piglets" onerror="this.style.display='none'">
+        </div>
+        <div class="product-card-body">
+          <div class="product-category">🐖 Swine</div>
+          <div class="product-name">Nuklospray P30 for Piglets</div>
+          <div class="product-desc">High-protein milk replacer for piglets, ensuring superior nutritional support during the critical weaning transition period.</div>
+          <span class="product-tag">Milk Replacer</span>
+        </div>
+      </div>
+      <div class="product-card reveal" data-cat="feed-additives">
+        <div class="product-card-img">
+          <img src="../images/Salkil-200x345.png" alt="Salkil" onerror="this.style.display='none'">
+        </div>
+        <div class="product-card-body">
+          <div class="product-category">⚗️ Feed Additives</div>
+          <div class="product-name">Salkil</div>
+          <div class="product-desc">Liquid organic acid blend used as a feed preservative and gut health promoter, inhibiting the growth of harmful bacteria in animal feed.</div>
+          <span class="product-tag">Feed Additive</span>
+        </div>
+      </div>
+      <div class="product-card reveal" data-cat="feed-additives">
+        <div class="product-card-img">
+          <img src="../images/20140421_103900.png" alt="Bolifor FA 2300S" onerror="this.style.display='none'">
+        </div>
+        <div class="product-card-body">
+          <div class="product-category">⚗️ Feed Additives</div>
+          <div class="product-name">Bolifor FA 2300S</div>
+          <div class="product-desc">Phytase enzyme supplement that improves phosphorus digestibility in monogastric animals, reducing feed costs and environmental phosphorus excretion.</div>
+          <span class="product-tag">Enzyme</span>
+        </div>
+      </div>
+      <div class="product-card reveal" data-cat="feed-raw-materials">
+        <div class="product-card-img">
+          <img src="../images/bolifor-1.png" alt="Bolifor MCP – F" onerror="this.style.display='none'">
+        </div>
+        <div class="product-card-body">
+          <div class="product-category">🌾 Feed Raw Materials</div>
+          <div class="product-name">Bolifor MCP – F</div>
+          <div class="product-desc">Monocalcium phosphate feed grade providing a highly bioavailable source of phosphorus and calcium for all production animals.</div>
+          <span class="product-tag">Raw Material</span>
+        </div>
+      </div>
+      <div class="product-card reveal" data-cat="swine">
+        <div class="product-card-img">
+          <img src="../images/Profish.png" alt="Profish Ω Swine" onerror="this.style.display='none'">
+        </div>
+        <div class="product-card-body">
+          <div class="product-category">🐖 Swine</div>
+          <div class="product-name">Profish Ω Swine</div>
+          <div class="product-desc">Omega-3 rich fish oil supplement for swine diets, supporting immune function, reproductive performance and overall animal health.</div>
+          <span class="product-tag">Omega-3 Supplement</span>
+        </div>
+      </div>
+      <div class="product-card reveal" data-cat="poultry">
+        <div class="product-card-img">
+          <img src="../images/Profish.png" alt="Profish Ω Poultry" onerror="this.style.display='none'">
+        </div>
+        <div class="product-card-body">
+          <div class="product-category">🐔 Poultry</div>
+          <div class="product-name">Profish Ω Poultry</div>
+          <div class="product-desc">Omega-3 rich fish oil supplement for poultry diets, improving egg quality, meat composition and overall flock performance.</div>
+          <span class="product-tag">Omega-3 Supplement</span>
+        </div>
+      </div>
+      <div class="product-card reveal" data-cat="swine">
+        <div class="product-card-img">
+          <img src="../images/milkiwean-precoce-def-lr-2.png" alt="Milkiwean Precoce" onerror="this.style.display='none'">
+        </div>
+        <div class="product-card-body">
+          <div class="product-category">🐖 Swine</div>
+          <div class="product-name">Milkiwean Precoce</div>
+          <div class="product-desc">Early weaning supplement for piglets supporting the transition from milk to solid feed, promoting gut health and feed intake post-weaning.</div>
+          <span class="product-tag">Weaning Support</span>
+        </div>
+      </div>
+      <div class="product-card reveal" data-cat="veterinary">
+        <div class="product-card-img">
+          <img src="../images/ahs-png.png" alt="Farm-O-San AHS" onerror="this.style.display='none'">
+        </div>
+        <div class="product-card-body">
+          <div class="product-category">💉 Veterinary</div>
+          <div class="product-name">Farm-O-San AHS</div>
+          <div class="product-desc">Electrolyte and energy supplement for calves and livestock suffering from dehydration or metabolic stress, supporting rapid recovery.</div>
+          <span class="product-tag">Veterinary</span>
+        </div>
+      </div>
+      <div class="product-card reveal" data-cat="veterinary">
+        <div class="product-card-img">
+          <img src="../images/fos-reviva-1-kg.png" alt="Farm-O-San Reviva" onerror="this.style.display='none'">
+        </div>
+        <div class="product-card-body">
+          <div class="product-category">💉 Veterinary</div>
+          <div class="product-name">Farm-O-San Reviva</div>
+          <div class="product-desc">Drench supplement for freshly calved cows, providing energy, electrolytes and calcium to support a smooth transition period post-calving.</div>
+          <span class="product-tag">Veterinary</span>
+        </div>
+      </div>
+      <div class="product-card reveal" data-cat="veterinary">
+        <div class="product-card-img">
+          <img src="../images/fos-rediar-sachet.png" alt="Farm-O-San Rediar" onerror="this.style.display='none'">
+        </div>
+        <div class="product-card-body">
+          <div class="product-category">💉 Veterinary</div>
+          <div class="product-name">Farm-O-San Rediar</div>
+          <div class="product-desc">Oral rehydration supplement for calves with diarrhoea, restoring fluid balance and supporting intestinal recovery.</div>
+          <span class="product-tag">Veterinary</span>
+        </div>
+      </div>
+      <div class="product-card reveal" data-cat="feed-additives">
+        <div class="product-card-img">
+          <img src="../images/sorbatox-200x345.png" alt="Sorbatox" onerror="this.style.display='none'">
+        </div>
+        <div class="product-card-body">
+          <div class="product-category">⚗️ Feed Additives</div>
+          <div class="product-name">Sorbatox</div>
+          <div class="product-desc">Broad-spectrum mycotoxin binder combining multiple adsorbents to neutralise a wide range of mycotoxins in contaminated feed.</div>
+          <span class="product-tag">Mycotoxin Binder</span>
+        </div>
+      </div>
+      <div class="product-card reveal" data-cat="feed-raw-materials">
+        <div class="product-card-img">
+          <img src="../images/1212805684906.png" alt="Agrofat" onerror="this.style.display='none'">
+        </div>
+        <div class="product-card-body">
+          <div class="product-category">🌾 Feed Raw Materials</div>
+          <div class="product-name">Agrofat</div>
+          <div class="product-desc">Rumen-protected fat supplement providing a concentrated energy source for high-producing dairy cows, improving energy balance and milk production.</div>
+          <span class="product-tag">Energy Supplement</span>
+        </div>
+      </div>
+      <div class="product-card reveal" data-cat="feed-raw-materials">
+        <div class="product-card-img">
+          <img src="../images/hidropalm.png" alt="Hidropalm" onerror="this.style.display='none'">
+        </div>
+        <div class="product-card-body">
+          <div class="product-category">🌾 Feed Raw Materials</div>
+          <div class="product-name">Hidropalm</div>
+          <div class="product-desc">Hydrolysed palm fat offering high energy density and excellent digestibility as a fat supplement in ruminant and poultry diets.</div>
+          <span class="product-tag">Fat Supplement</span>
+        </div>
+      </div>
+      <div class="product-card reveal" data-cat="feed-additives">
+        <div class="product-card-img">
+          <img src="../images/Choline-70_.png" alt="Choline Chloride 70%" onerror="this.style.display='none'">
+        </div>
+        <div class="product-card-body">
+          <div class="product-category">⚗️ Feed Additives</div>
+          <div class="product-name">Choline Chloride 70%</div>
+          <div class="product-desc">Choline chloride on a carrier substrate at 70% concentration, essential for liver function, fat metabolism and reproductive performance in all species.</div>
+          <span class="product-tag">Feed Additive</span>
+        </div>
+      </div>
+      <div class="product-card reveal" data-cat="feed-additives">
+        <div class="product-card-img">
+          <img src="../images/choline-60_.png" alt="Choline Chloride 60%" onerror="this.style.display='none'">
+        </div>
+        <div class="product-card-body">
+          <div class="product-category">⚗️ Feed Additives</div>
+          <div class="product-name">Choline Chloride 60%</div>
+          <div class="product-desc">Choline chloride on a carrier substrate at 60% concentration, supporting liver health and metabolic functions in poultry and swine diets.</div>
+          <span class="product-tag">Feed Additive</span>
+        </div>
+      </div>
+      <div class="product-card reveal" data-cat="feed-additives">
+        <div class="product-card-img">
+          <img src="../images/20171114_130826.png" alt="Denubond Pellet Binder" onerror="this.style.display='none'">
+        </div>
+        <div class="product-card-body">
+          <div class="product-category">⚗️ Feed Additives</div>
+          <div class="product-name">Denubond Pellet Binder</div>
+          <div class="product-desc">High-performance pellet binder improving pellet durability and feed mill efficiency, reducing fines and improving feed conversion.</div>
+          <span class="product-tag">Pellet Binder</span>
+        </div>
+      </div>
+      <div class="product-card reveal" data-cat="feed-additives">
+        <div class="product-card-img">
+          <img src="../images/Denuvator.png" alt="Denuvator Toxin Binder" onerror="this.style.display='none'">
+        </div>
+        <div class="product-card-body">
+          <div class="product-category">⚗️ Feed Additives</div>
+          <div class="product-name">Denuvator Toxin Binder</div>
+          <div class="product-desc">Multi-component toxin binder providing comprehensive mycotoxin adsorption across a broad pH range in all animal species.</div>
+          <span class="product-tag">Mycotoxin Binder</span>
+        </div>
+      </div>
+      <div class="product-card reveal" data-cat="feed-additives">
+        <div class="product-card-img">
+          <img src="../images/Photo-Selko-Toxo-XL-15.png" alt="Toxo XL Toxin Binder" onerror="this.style.display='none'">
+        </div>
+        <div class="product-card-body">
+          <div class="product-category">⚗️ Feed Additives</div>
+          <div class="product-name">Toxo XL Toxin Binder</div>
+          <div class="product-desc">Advanced mycotoxin management solution combining adsorption and biotransformation to protect against the full spectrum of mycotoxins.</div>
+          <span class="product-tag">Mycotoxin Binder</span>
+        </div>
+      </div>
+      <div class="product-card reveal" data-cat="veterinary">
+        <div class="product-card-img">
+          <img src="../images/TILOSINA.png" alt="Tilosina 24%" onerror="this.style.display='none'">
+        </div>
+        <div class="product-card-body">
+          <div class="product-category">💉 Veterinary</div>
+          <div class="product-name">Tilosina 24%</div>
+          <div class="product-desc">Tylosin-based antibiotic premix at 24% concentration for the prevention and treatment of mycoplasmosis and other bacterial infections in poultry and swine.</div>
+          <span class="product-tag">Veterinary</span>
+        </div>
+      </div>
+      <div class="product-card reveal" data-cat="veterinary">
+        <div class="product-card-img">
+          <img src="../images/Amprolium.png" alt="Amprolium 25%" onerror="this.style.display='none'">
+        </div>
+        <div class="product-card-body">
+          <div class="product-category">💉 Veterinary</div>
+          <div class="product-name">Amprolium 25%</div>
+          <div class="product-desc">Coccidiostatic premix containing 25% amprolium for the prevention and treatment of coccidiosis in poultry and ruminants.</div>
+          <span class="product-tag">Veterinary</span>
+        </div>
+      </div>
+      <div class="product-card reveal" data-cat="veterinary">
+        <div class="product-card-img">
+          <img src="../images/chemifarma.png" alt="Tiam – OXI" onerror="this.style.display='none'">
+        </div>
+        <div class="product-card-body">
+          <div class="product-category">💉 Veterinary</div>
+          <div class="product-name">Tiam – OXI</div>
+          <div class="product-desc">Combined tiamulin and oxytetracycline antibiotic premix for the treatment of respiratory and enteric diseases in swine and poultry.</div>
+          <span class="product-tag">Veterinary</span>
+        </div>
+      </div>
+      <div class="product-card reveal" data-cat="veterinary">
+        <div class="product-card-img">
+          <img src="../images/FLumechina.png" alt="Flumechina 50%" onerror="this.style.display='none'">
+        </div>
+        <div class="product-card-body">
+          <div class="product-category">💉 Veterinary</div>
+          <div class="product-name">Flumechina 50%</div>
+          <div class="product-desc">Flumequine antibiotic premix at 50% concentration for the treatment of enteric and respiratory bacterial infections in production animals.</div>
+          <span class="product-tag">Veterinary</span>
+        </div>
+      </div>
+      <div class="product-card reveal" data-cat="veterinary">
+        <div class="product-card-img">
+          <img src="../images/Trimethoprim.png" alt="Trimetoprim 40 Sulfadimetossina 200" onerror="this.style.display='none'">
+        </div>
+        <div class="product-card-body">
+          <div class="product-category">💉 Veterinary</div>
+          <div class="product-name">Trimetoprim 40 Sulfadimetossina 200</div>
+          <div class="product-desc">Combination sulfonamide-trimethoprim antibiotic premix for broad-spectrum antibacterial treatment in poultry and swine.</div>
+          <span class="product-tag">Veterinary</span>
+        </div>
+      </div>
+      <div class="product-card reveal" data-cat="feed-additives">
+        <div class="product-card-img">
+          <img src="../images/selene.png" alt="Selene" onerror="this.style.display='none'">
+        </div>
+        <div class="product-card-body">
+          <div class="product-category">⚗️ Feed Additives</div>
+          <div class="product-name">Selene</div>
+          <div class="product-desc">Organic selenium supplement supporting antioxidant defence, reproductive performance and immune function in all production animal species.</div>
+          <span class="product-tag">Trace Mineral</span>
+        </div>
+      </div>
+      <div class="product-card reveal" data-cat="veterinary">
+        <div class="product-card-img">
+          <img src="../images/AD3E6.png" alt="AD3EC" onerror="this.style.display='none'">
+        </div>
+        <div class="product-card-body">
+          <div class="product-category">💉 Veterinary</div>
+          <div class="product-name">AD3EC</div>
+          <div class="product-desc">Fat-soluble vitamin combination (A, D3, E, C) supplement supporting immunity, bone development and overall animal health and productivity.</div>
+          <span class="product-tag">Vitamin Supplement</span>
+        </div>
+      </div>
+      <div class="product-card reveal" data-cat="veterinary">
+        <div class="product-card-img">
+          <img src="../images/fos-calciplus.png" alt="Fos CalciPlus" onerror="this.style.display='none'">
+        </div>
+        <div class="product-card-body">
+          <div class="product-category">💉 Veterinary</div>
+          <div class="product-name">Fos CalciPlus</div>
+          <div class="product-desc">Calcium and energy drench for freshly calved dairy cows, preventing milk fever and supporting the transition into lactation.</div>
+          <span class="product-tag">Veterinary</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:60px;background:var(--cream);border-radius:20px;padding:48px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center">
+      <div>
+        <div class="section-label">Custom Formulations</div>
+        <h3 style="font-family:var(--font-display);font-size:1.8rem;color:var(--blue-dark);margin-bottom:16px;line-height:1.3">Need a Tailored Premix?</h3>
+        <p style="color:var(--gray-500);line-height:1.8;font-size:0.95rem">We specialise in developing bespoke vitamin and mineral premix formulations based on your specific animal requirements, local nutritional guidelines, and feed ingredients. Contact our technical team to discuss your needs.</p>
+      </div>
+      <div style="text-align:center">
+        <a href="contact.html" class="btn-primary" style="background:var(--blue-mid);color:#fff;font-size:1rem;padding:16px 36px">Request a Custom Formulation →</a>
+        <div style="margin-top:16px;font-size:0.82rem;color:var(--gray-500)">Our technical team will respond within 24 hours</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div>
+        <img src="../images/agromedica-logo.png" alt="Agromedica" style="height:48px;object-fit:contain;margin-bottom:12px;filter:brightness(0) invert(1);">
+        <div class="footer-brand-name">Agromedica</div>
+        <div class="footer-brand-desc">Manufacturing premium vitamin and mineral premixes for animal feeds since 1993.</div>
+      </div>
+      <div>
+        <div class="footer-col-title">Products</div>
+        <ul class="footer-links">
+          <li><a href="products.html">Ruminants</a></li>
+          <li><a href="products.html">Swine</a></li>
+          <li><a href="products.html">Poultry</a></li>
+          <li><a href="products.html">Veterinary</a></li>
+          <li><a href="products.html">Feed Additives</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Company</div>
+        <ul class="footer-links">
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="export.html">Export</a></li>
+          <li><a href="events.html">Events</a></li>
+          <li><a href="certifications.html">Certifications</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Contact</div>
+        <div class="footer-contact-item"><span class="footer-contact-icon">📍</span>Pigasou 13-15, Aradippou, Larnaca, Cyprus</div>
+        <div class="footer-contact-item"><span class="footer-contact-icon">📞</span>+357 24 815084</div>
+        <div class="footer-contact-item"><span class="footer-contact-icon">✉️</span><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="0d64636b624d6c6a7f62606869646e6c236e6260">[email&#160;protected]</a></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Agromedica Ltd. All rights reserved.</span>
+      <span>Designed by Agromedica IT Team</span>
+    </div>
+  </div>
+</footer>
+<script src="../js/main.js"></script>
+</body>
+</html>

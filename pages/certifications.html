@@ -69,7 +69,17 @@ nav {
   box-shadow:0 2px 24px rgba(0,0,0,0.25);
   animation:nav-drop .6s var(--ease) both;
 }
-.nav-logo { display:flex; align-items:center; gap:12px; text-decoration:none; transition:opacity var(--transition); }
+.nav-logo {
+  display:flex;
+  align-items:center;
+  gap:12px;
+  text-decoration:none;
+  transition:opacity var(--transition);
+  background:rgba(255,255,255,0.82);
+  padding:6px 18px 6px 10px;
+  border-radius:16px;
+  box-shadow:0 2px 12px rgba(0,0,0,0.07);
+ }
 .nav-logo:hover { opacity:.85; }
 .nav-logo-icon {
   width:44px; height:44px; background:var(--gold); border-radius:10px;
@@ -380,11 +390,6 @@ footer { background:var(--blue-dark); padding:80px 5% 40px; }
         <div class="cert-desc">Hazard Analysis and Critical Control Points — a preventive approach to food and feed safety that identifies potential hazards and establishes controls.</div>
       </div>
       <div class="cert-card reveal">
-        <div class="cert-icon">🌱</div>
-        <div class="cert-name">GMP+ Feed Safety</div>
-        <div class="cert-desc">Good Manufacturing Practice certification specifically for the feed industry, ensuring safe and responsible production of animal feed ingredients.</div>
-      </div>
-      <div class="cert-card reveal">
         <div class="cert-icon">🏅</div>
         <div class="cert-name">EU Feed Regulations</div>
         <div class="cert-desc">Full compliance with European Union regulations governing the production, labelling, and distribution of feed materials and premixtures.</div>
@@ -398,13 +403,20 @@ footer { background:var(--blue-dark); padding:80px 5% 40px; }
         <img src="../images/cert-approval-intermediary.png" alt="Certificate of Approval of Intermediary" class="cert-img" style="max-width:180px;margin-bottom:18px;">
         <div class="cert-name">Certificate of Approval of Intermediary</div>
         <div class="cert-desc">Recognizes compliance with industry standards and regulations, ensuring quality and safety benchmarks.</div>
-        <a href="../images/cert-approval-intermediary.png" target="_blank" class="btn-outline" style="margin-top:12px;">View Certificate</a>
+        <a href="../images/cert-approval-intermediary.png" target="_blank" class="btn-outline" style="margin-top:12px;color:var(--blue-dark);border-color:var(--blue-mid);">View Certificate</a>
       </div>
       <div class="cert-card reveal">
         <img src="../images/cert-iso22000.png" alt="ISO 22000:2018" class="cert-img" style="max-width:180px;margin-bottom:18px;">
         <div class="cert-name">ISO 22000:2018</div>
         <div class="cert-desc">Food Safety Management System – international standard for food safety management.</div>
-        <a href="../images/cert-iso22000.png" target="_blank" class="btn-outline" style="margin-top:12px;">View Certificate</a>
+        <a href="../images/cert-iso22000.png" target="_blank" class="btn-outline" style="margin-top:12px;color:var(--blue-dark);border-color:var(--blue-mid);">View Certificate</a>
+      </div>
+      <div class="cert-card reveal">
+        <img src="../images/eu-funding-cert.jpg" alt="EU Funding Certificate" class="cert-img" style="max-width:180px;margin-bottom:18px;">
+        <img src="../images/eu.jpg" alt="EU Funding Certificate" class="cert-img" style="max-width:180px;margin-bottom:18px;">
+        <div class="cert-name">EU Support for Agricultural Products Processing Unit</div>
+        <div class="cert-desc">Official recognition and funding from the European Union for our processing and trading operations, supporting sustainable agricultural development.</div>
+        <a href="../images/eu.jpg" target="_blank" class="btn-outline" style="margin-top:12px;color:var(--blue-dark);border-color:var(--blue-mid);">Learn More</a>
       </div>
     </div>
 
@@ -435,7 +447,8 @@ footer { background:var(--blue-dark); padding:80px 5% 40px; }
           <li><a href="products.html">Veterinary</a></li>
           <li><a href="products.html">Feed Additives</a></li>
         </ul>
-      ../iv>ge     <div>
+      </div>
+      <div>
         <div class="footer-col-title">Company</div>
         <ul class="footer-links">
           <li><a href="about.html">About Us</a></li>

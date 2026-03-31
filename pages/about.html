@@ -69,7 +69,17 @@ nav {
   box-shadow:0 2px 24px rgba(0,0,0,0.25);
   animation:nav-drop .6s var(--ease) both;
 }
-.nav-logo { display:flex; align-items:center; gap:12px; text-decoration:none; transition:opacity var(--transition); }
+.nav-logo {
+  display:flex;
+  align-items:center;
+  gap:12px;
+  text-decoration:none;
+  transition:opacity var(--transition);
+  background:rgba(255,255,255,0.82);
+  padding:6px 18px 6px 10px;
+  border-radius:16px;
+  box-shadow:0 2px 12px rgba(0,0,0,0.07);
+ }
 .nav-logo:hover { opacity:.85; }
 .nav-logo-icon {
   width:44px; height:44px; background:var(--gold); border-radius:10px;
@@ -203,7 +213,7 @@ nav {
 .pillar { background:var(--white); border-radius:12px; padding:20px; border-left:3px solid var(--blue-accent); transition:transform var(--transition),box-shadow var(--transition),border-color var(--transition); }
 .pillar:hover { transform:translateX(5px); box-shadow:0 8px 24px rgba(13,42,74,.1); border-color:var(--gold); }
 .pillar-icon { font-size:1.4rem; margin-bottom:8px; transition:transform var(--transition); }
-.pillar:hover .pillar-icon { transform:scale(1.3); }
+.pillar:hover .pillar-icon { transform:scale(1.1); }
 .pillar-title { font-weight:600; font-size:.9rem; color:var(--blue-dark); margin-bottom:4px; }
 .pillar-text { font-size:.8rem; color:var(--gray-500); line-height:1.5; }
 
@@ -272,7 +282,7 @@ nav {
 .partners-inner { max-width:1280px; margin:0 auto; text-align:center; }
 .partners-title { font-size:.8rem; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:var(--gray-500); margin-bottom:36px; }
 .partners-logos { display:flex; align-items:center; justify-content:center; gap:48px; flex-wrap:wrap; }
-.partner-logo { height:40px; opacity:.4; filter:grayscale(1); transition:opacity .4s var(--ease),filter .4s var(--ease),transform .4s var(--ease); object-fit:contain; cursor:pointer; }
+.partner-logo { height:80px; opacity:.4; filter:grayscale(1); transition:opacity .4s var(--ease),filter .4s var(--ease),transform .4s var(--ease); object-fit:contain; cursor:pointer; max-width:220px; }
 .partner-logo:hover { opacity:1; filter:grayscale(0); transform:scale(1.12) translateY(-4px); }
 
 /* ── FOOTER ── */
@@ -445,22 +455,22 @@ footer { background:var(--blue-dark); padding:80px 5% 40px; }
           <div class="pillar reveal">
             <div class="pillar-icon">🎯</div>
             <div class="pillar-title">Our Mission</div>
-            <div class="pillar-text">To produce and distribute high quality products while building long term relationships with customers built on trust and reliability.</div>
+            <div class="pillar-text">Produce and distribute high quality products while building lasting customer relationships.</div>
           </div>
           <div class="pillar reveal">
             <div class="pillar-icon">🔭</div>
             <div class="pillar-title">Our Vision</div>
-            <div class="pillar-text">To be one of the leading companies in Cyprus and abroad in the production of premixes, vitamins, and feed supplements.</div>
+            <div class="pillar-text">To be a leading producer of premixes and feed supplements in Cyprus and across the region.</div>
           </div>
           <div class="pillar reveal">
-            <div class="pillar-icon">💡</div>
-            <div class="pillar-title">Innovation</div>
-            <div class="pillar-text">Continuously developing new formulations and adopting the latest nutritional science to keep our products at the cutting edge.</div>
+            <div class="pillar-icon">🏭</div>
+            <div class="pillar-title">Manufacturing</div>
+            <div class="pillar-text">Custom and standard formulations from our facility in Larnaca, Cyprus.</div>
           </div>
           <div class="pillar reveal">
-            <div class="pillar-icon">🤝</div>
-            <div class="pillar-title">Reliability</div>
-            <div class="pillar-text">Consistent quality, on-time delivery, and responsive customer service — the foundation of every relationship we build.</div>
+            <div class="pillar-icon">🌐</div>
+            <div class="pillar-title">Distribution</div>
+            <div class="pillar-text">Amino acids, milk replacers, veterinary and pharmaceutical products for all production animals.</div>
           </div>
         </div>
       </div>
@@ -499,16 +509,16 @@ footer { background:var(--blue-dark); padding:80px 5% 40px; }
 
 <section class="partners-section">
   <div class="partners-inner">
-    <p class="partners-title">Our Trusted Partners</p>
+    <p class="partners-title">Trusted Partners & Suppliers</p>
     <div class="partners-logos">
-      <img class="partner-logo" src="../images/NorelLogo.jpg" alt="Norel">
-      <img class="partner-logo" src="../images/logo_trouw.jpg" alt="Trouw Nutrition">
-      <img class="partner-logo" src="../images/denuco.jpg" alt="Denuco">
-      <img class="partner-logo" src="../images/hankkija.jpg" alt="Hankkija">
-      <img class="partner-logo" src="../images/csm_btc-logo_421d0e8f83.jpg" alt="BTC">
-      <img class="partner-logo" src="../images/chemifarma.jpg" alt="Chemifarma">
-      <img class="partner-logo" src="../images/balchem.jpg" alt="Balchem">
-      <img class="partner-logo" src="../images/Anpario_Logo_300px.jpg" alt="Anpario">
+      <a href="https://www.trouwnutrition.com/" target="_blank" rel="noopener"><img class="partner-logo" src="../images/logo_trouw.jpg" alt="Trouw Nutrition"></a>
+      <a href="https://www.norel.net/" target="_blank" rel="noopener"><img class="partner-logo" src="../images/NorelLogo.jpg" alt="Norel"></a>
+      <a href="https://www.denuco.com/" target="_blank" rel="noopener"><img class="partner-logo" src="../images/denuco.jpg" alt="Denuco"></a>
+      <a href="https://www.hankkija.fi/" target="_blank" rel="noopener"><img class="partner-logo" src="../images/hankkija.jpg" alt="Hankkija"></a>
+      <a href="https://www.btc-europe.com/en/" target="_blank" rel="noopener"><img class="partner-logo" src="../images/csm_btc-logo_421d0e8f83.jpg" alt="BTC"></a>
+      <a href="https://www.chemifarma.it/" target="_blank" rel="noopener"><img class="partner-logo" src="../images/chemifarma.jpg" alt="Chemifarma"></a>
+      <a href="https://www.balchem.com/" target="_blank" rel="noopener"><img class="partner-logo" src="../images/balchem.jpg" alt="Balchem"></a>
+      <a href="https://www.anpario.com/" target="_blank" rel="noopener"><img class="partner-logo" src="../images/Anpario_Logo_300px.jpg" alt="Anpario"></a>
     </div>
   </div>
 </section>

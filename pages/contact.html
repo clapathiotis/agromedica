@@ -548,13 +548,13 @@ footer { background:var(--blue-dark); padding:80px 5% 40px; }
         <div class="footer-contact-item"><span class="footer-contact-icon">✉️</span><a href="mailto:execution@agromedica.com" style="color:var(--gray-500);text-decoration:none;">execution@agromedica.com</a></div>
       </d</div></footer><script>
 (function() {
-  emailjs.init("YOUR_PUBLIC_KEY"); // Replace with your EmailJS public key
+  emailjs.init("e8fl6wWPGY6g8c9Ho"); // Replace with your EmailJS public key
 })();
 
 document.getElementById('contactForm').addEventListener('submit', function(event) {
   event.preventDefault();
 
-  emailjs.sendForm('service_6vmmpjg', 'YOUR_TEMPLATE_ID', this) // Replace with your service and template IDs
+  emailjs.sendForm('service_mi2speg', 'template_emmwtnd', this) // Replace with your service and template IDs
     .then(function() {
       alert('Message sent successfully!');
       document.getElementById('contactForm').reset();

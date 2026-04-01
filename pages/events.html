@@ -576,6 +576,33 @@ footer { background:var(--blue-dark); padding:80px 5% 40px; }
   </div>
 </section>
 
+<!-- ✅ THIS IS THE FIX -->
+<script>
+const tabs = document.querySelectorAll('.events-tab');
+const cards = document.querySelectorAll('.event-card');
+
+tabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+
+    // Set active tab
+    tabs.forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+
+    const selected = tab.getAttribute('data-tab');
+
+    cards.forEach(card => {
+      const status = card.getAttribute('data-status');
+
+      if (selected === 'all' || selected === status) {
+        card.style.display = 'flex';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+
+  });
+});
+</script>
 <footer>
   <div class="footer-inner">
     <div class="footer-grid">

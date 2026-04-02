@@ -557,10 +557,10 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
   submitBtn.classList.add('loading');
 
   // 3. Send email to Agromedica team
-  emailjs.sendForm('service_mi2speg', 'template_iefk84k', form)
+  emailjs.sendForm('service_5kgoqdl', 'template_iefk84k', form)
     .then(function() {
       // 4. Send auto-reply to the user
-      return emailjs.sendForm('service_mi2speg', 'template_emmwtnd', form);
+      return emailjs.sendForm('service_5kgoqdl', 'template_emmwtnd', form);
     })
     .then(function() {
       // 5. Show success state — slide the form out, success panel in

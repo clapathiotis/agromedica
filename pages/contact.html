@@ -68,7 +68,7 @@ nav {
 }
 .nav-logo {
   display:flex; align-items:center; gap:12px; text-decoration:none;
-  background:rgba(255,255,255,0.82); padding:6px 18px 6px 10px;
+  background:rgba(255,255,255,0.6); padding:6px 18px 6px 10px;
   border-radius:16px; box-shadow:0 2px 12px rgba(0,0,0,0.07);
   transition:opacity var(--transition);
 }
@@ -303,9 +303,9 @@ footer { background:var(--blue-dark); padding:80px 5% 40px; }
   .responsive-2col { grid-template-columns:1fr !important; gap:32px !important; }
 }
 @media (max-width:768px) {
-  .nav-links { display:none !important; }
+  .nav-links { display: none; }
   .nav-links.open {
-    display:flex !important;
+    display:flex;
     flex-direction:column;
     position:fixed;
     top:var(--nav-h); left:0; right:0;
@@ -315,7 +315,7 @@ footer { background:var(--blue-dark); padding:80px 5% 40px; }
     padding:24px 5% 36px;
     border-top:1px solid rgba(255,255,255,0.12);
     gap:6px;
-    z-index:999;
+    z-index:1001;
     box-shadow:0 16px 48px rgba(0,0,0,0.4);
     transform-origin:top center;
     animation:menuSlideDown 0.28s cubic-bezier(0.4,0,0.2,1) both;
@@ -539,7 +539,7 @@ footer { background:var(--blue-dark); padding:80px 5% 40px; }
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2025 Agromedica Ltd. All rights reserved.</span>
+      <span>© 2026 Agromedica Ltd. All rights reserved.</span>
       <span>Larnaca, Cyprus · Est. 1993</span>
     </div>
   </div>
@@ -548,29 +548,6 @@ footer { background:var(--blue-dark); padding:80px 5% 40px; }
 <script>
 // ── EmailJS init
 emailjs.init("e8fl6wWPGY6g8c9Ho");
-
-// ── Mobile nav
-document.addEventListener('DOMContentLoaded', function() {
-  var hamburger = document.getElementById('hamburger');
-  var navLinks  = document.querySelector('.nav-links');
-  if (hamburger && navLinks) {
-    hamburger.addEventListener('click', function(e) {
-      e.stopPropagation();
-      var open = navLinks.classList.toggle('open');
-      var spans = hamburger.querySelectorAll('span');
-      spans[0].style.transform = open ? 'translateY(7px) rotate(45deg)' : '';
-      spans[1].style.opacity   = open ? '0' : '';
-      spans[2].style.transform = open ? 'translateY(-7px) rotate(-45deg)' : '';
-    });
-    document.addEventListener('click', function(e) {
-      if (!hamburger.contains(e.target) && !navLinks.contains(e.target)) {
-        navLinks.classList.remove('open');
-        var spans = hamburger.querySelectorAll('span');
-        spans[0].style.transform = spans[1].style.opacity = spans[2].style.transform = '';
-      }
-    });
-  }
-});
 
 // ── Form submission
 document.getElementById('contactForm').addEventListener('submit', function(e) {

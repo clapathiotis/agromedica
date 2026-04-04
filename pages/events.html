@@ -75,7 +75,7 @@ nav {
   gap:12px;
   text-decoration:none;
   transition:opacity var(--transition);
-  background:rgba(255,255,255,0.82);
+  background:rgba(255,255,255,0.6);
   padding:6px 18px 6px 10px;
   border-radius:16px;
   box-shadow:0 2px 12px rgba(0,0,0,0.07);
@@ -431,7 +431,7 @@ footer { background:var(--blue-dark); padding:80px 5% 40px; }
     </div>
 
     <!-- Upcoming Highlight -->
-    <div style="background:linear-gradient(135deg,var(--blue-dark),var(--blue-mid));border-radius:20px;padding:40px 48px;display:grid;grid-template-columns:1fr auto;gap:32px;align-items:center;margin-bottom:48px">
+    <div style="background:linear-gradient(135deg,var(--blue-dark),var(--blue-mid));border-radius:20px;padding:40px 48px;display:grid;grid-template-columns:1fr;gap:32px;align-items:center;margin-bottom:48px">
       <div>
         <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(201,168,76,0.2);border:1px solid rgba(201,168,76,0.4);color:var(--gold-light);font-size:0.72rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;padding:6px 14px;border-radius:100px;margin-bottom:20px">
           🗓️ Next Event
@@ -584,33 +584,6 @@ footer { background:var(--blue-dark); padding:80px 5% 40px; }
   </div>
 </section>
 
-<!-- ✅ THIS IS THE FIX -->
-<script>
-const tabs = document.querySelectorAll('.events-tab');
-const cards = document.querySelectorAll('.event-card');
-
-tabs.forEach(tab => {
-  tab.addEventListener('click', () => {
-
-    // Set active tab
-    tabs.forEach(t => t.classList.remove('active'));
-    tab.classList.add('active');
-
-    const selected = tab.getAttribute('data-tab');
-
-    cards.forEach(card => {
-      const status = card.getAttribute('data-status');
-
-      if (selected === 'all' || selected === status) {
-        card.style.display = 'flex';
-      } else {
-        card.style.display = 'none';
-      }
-    });
-
-  });
-});
-</script>
 <footer>
   <div class="footer-inner">
     <div class="footer-grid">
@@ -647,8 +620,11 @@ tabs.forEach(tab => {
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2025 Agromedica Ltd. All rights reserved.</span>
-      <span
+      <span>© 2026 Agromedica Ltd. All rights reserved.</span>
+      <span>Larnaca, Cyprus · Est. 1993</span>
+    </div>
+  </div>
+</footer>
 
 <script src="../js/main.js"></script>
 </body>

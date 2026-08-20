@@ -466,6 +466,9 @@ footer { background:var(--blue-dark); padding:80px 5% 40px; }
   .footer-grid { grid-template-columns:1fr; gap:32px; }
   .form-row { grid-template-columns:1fr; }
   .contact-form, .contact-form-wrap { padding:28px; }
+  .custom-formulation-cta { grid-template-columns:1fr !important; gap:28px !important; padding:32px 24px !important; text-align:left !important; }
+  .custom-formulation-cta-action { text-align:left !important; }
+  .custom-formulation-cta-action a.btn-primary { display:inline-block; width:100%; text-align:center; box-sizing:border-box; }
 }
 </style>
 </head>
@@ -1171,13 +1174,13 @@ footer { background:var(--blue-dark); padding:80px 5% 40px; }
         </div>
       </div>
     </div>
-    <div style="margin-top:60px;background:var(--cream);border-radius:20px;padding:48px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center">
+    <div class="custom-formulation-cta" style="margin-top:60px;background:var(--cream);border-radius:20px;padding:48px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center">
       <div>
         <div class="section-label">Custom Formulations</div>
         <h3 style="font-family:var(--font-display);font-size:1.8rem;color:var(--blue-dark);margin-bottom:16px;line-height:1.3">Need a Tailored Premix?</h3>
         <p style="color:var(--gray-500);line-height:1.8;font-size:0.95rem">We specialise in developing bespoke vitamin and mineral premix formulations based on your specific animal requirements, local nutritional guidelines, and feed ingredients. Contact our technical team to discuss your needs.</p>
       </div>
-      <div style="text-align:center">
+      <div class="custom-formulation-cta-action" style="text-align:center">
         <a href="contact.html" class="btn-primary" style="background:var(--blue-mid);color:#fff;font-size:1rem;padding:16px 36px">Request a Custom Formulation →</a>
         <div style="margin-top:16px;font-size:0.82rem;color:var(--gray-500)">Our technical team will respond within 24 hours</div>
       </div>

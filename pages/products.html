@@ -470,9 +470,47 @@ footer { background:var(--blue-dark); padding:80px 5% 40px; }
   .custom-formulation-cta-action { text-align:left !important; }
   .custom-formulation-cta-action a.btn-primary { display:inline-block; width:100%; text-align:center; box-sizing:border-box; }
 }
+
+/* Professional verification modal */
+.prof-gate-overlay { position:fixed; inset:0; background:rgba(13,30,45,.72); backdrop-filter:blur(3px); z-index:9999; display:flex; align-items:center; justify-content:center; padding:20px; }
+.prof-gate-modal { background:var(--white); border-radius:20px; max-width:460px; width:100%; padding:40px 36px; text-align:center; box-shadow:0 30px 70px rgba(0,0,0,.35); }
+.prof-gate-icon { width:56px; height:56px; border-radius:50%; background:var(--blue-dark); color:var(--gold-light); display:flex; align-items:center; justify-content:center; font-size:1.5rem; margin:0 auto 20px; }
+.prof-gate-modal h3 { font-family:var(--font-display); color:var(--blue-dark); font-size:1.3rem; margin-bottom:14px; }
+.prof-gate-modal p { color:var(--gray-700); font-size:.92rem; line-height:1.6; margin-bottom:10px; }
+.prof-gate-modal .prof-gate-note { font-size:.8rem; color:var(--gray-500); margin-top:18px; line-height:1.5; }
+.prof-gate-actions { display:flex; flex-direction:column; gap:10px; margin-top:22px; }
+.prof-gate-btn { border:none; border-radius:10px; padding:14px 20px; font-size:.95rem; font-weight:600; cursor:pointer; transition:var(--transition); font-family:var(--font-body); }
+.prof-gate-btn-yes { background:var(--blue-dark); color:var(--white); }
+.prof-gate-btn-yes:hover { background:var(--blue-mid); }
+.prof-gate-btn-no { background:var(--gray-100); color:var(--gray-700); }
+.prof-gate-btn-no:hover { background:var(--gray-200); }
+
+/* Prescription disclaimer + restricted state */
+.rx-disclaimer { background:var(--blue-pale); border:1px solid var(--blue-light); border-radius:12px; padding:16px 20px; margin:0 0 28px; font-size:.85rem; color:var(--blue-dark); line-height:1.6; display:flex; gap:12px; align-items:flex-start; }
+.rx-disclaimer .rx-icon { flex-shrink:0; font-size:1.1rem; }
+.rx-badge { display:inline-block; background:var(--blue-dark); color:var(--white); font-size:.7rem; font-weight:700; letter-spacing:.03em; padding:3px 9px; border-radius:20px; margin-bottom:8px; }
+.product-card[data-cat="veterinary"] .product-desc { margin-bottom:8px; }
+.rx-card-note { font-size:.78rem; color:var(--gray-500); line-height:1.5; padding-top:8px; border-top:1px dashed var(--gray-200); margin-top:10px; }
+.rx-restricted-notice { grid-column:1/-1; background:var(--gray-100); border:1px dashed var(--gray-200); border-radius:16px; padding:32px; text-align:center; color:var(--gray-500); font-size:.9rem; line-height:1.7; }
+.rx-restricted-notice a { color:var(--blue-accent); font-weight:600; text-decoration:none; }
+.filter-btn[data-cat="veterinary"].is-restricted { opacity:.5; }
 </style>
 </head>
 <body>
+
+<div class="prof-gate-overlay" id="profGateOverlay" style="display:none">
+  <div class="prof-gate-modal">
+    <div class="prof-gate-icon">🔒</div>
+    <h3>Professional Verification</h3>
+    <p>Some products on this page are veterinary medicinal products subject to veterinary prescription. Advertising of these products is restricted to animal health professionals under EU Regulation (EU) 2019/6.</p>
+    <p><strong>Are you a veterinarian, or a person authorised to prescribe or supply veterinary medicinal products?</strong></p>
+    <div class="prof-gate-actions">
+      <button class="prof-gate-btn prof-gate-btn-yes" id="profGateYes">Yes, I am an animal health professional</button>
+      <button class="prof-gate-btn prof-gate-btn-no" id="profGateNo">No / Prefer not to say</button>
+    </div>
+    <div class="prof-gate-note">Selecting "No" will hide prescription-only veterinary products from this page. Feed additives, premixes and raw materials remain visible either way.</div>
+  </div>
+</div>
 
 <nav>
   <a href="../index.html" class="nav-logo">
@@ -509,6 +547,11 @@ footer { background:var(--blue-dark); padding:80px 5% 40px; }
       <button class="filter-btn" data-cat="feed-additives">⚗️ Feed Additives</button>
       <button class="filter-btn" data-cat="feed-raw-materials">🌾 Feed Raw Materials</button>
       <button class="filter-btn" data-cat="diagnostics">🧪 Diagnostics</button>
+    </div>
+
+    <div class="rx-disclaimer">
+      <span class="rx-icon">℞</span>
+      <span>Products marked <strong>"Veterinary"</strong> are prescription veterinary medicinal products. Information on these products is intended for animal health professionals only, in line with EU Regulation (EU) 2019/6 on advertising of veterinary medicinal products. A veterinary prescription may be required to purchase or use these products depending on your country. Please consult a licensed veterinarian before use.</span>
     </div>
 
     <div class="products-grid">
@@ -793,10 +836,12 @@ footer { background:var(--blue-dark); padding:80px 5% 40px; }
           <img src="../images/TILOSINA.png" alt="Tilosina 24%" onerror="this.style.display='none'">
         </div>
         <div class="product-card-body">
+          <span class="rx-badge">℞ PRESCRIPTION ONLY</span>
           <div class="product-category">💉 Veterinary</div>
           <div class="product-name">Tilosina 24%</div>
           <div class="product-desc">Tylosin-based antibiotic premix at 24% concentration for the prevention and treatment of mycoplasmosis and other bacterial infections in poultry and swine.</div>
-          <span class="product-tag">Veterinary</span>
+          <div class="rx-card-note">Veterinary prescription may be required. For supply to licensed veterinarians and authorised distributors only.</div>
+        <span class="product-tag">Veterinary</span>
         </div>
       </div>
       <div class="product-card reveal" data-cat="veterinary">
@@ -804,10 +849,12 @@ footer { background:var(--blue-dark); padding:80px 5% 40px; }
           <img src="../images/Amprolium.png" alt="Amprolium 25%" onerror="this.style.display='none'">
         </div>
         <div class="product-card-body">
+          <span class="rx-badge">℞ PRESCRIPTION ONLY</span>
           <div class="product-category">💉 Veterinary</div>
           <div class="product-name">Amprolium 25%</div>
           <div class="product-desc">Coccidiostatic premix containing 25% amprolium for the prevention and treatment of coccidiosis in poultry and ruminants.</div>
-          <span class="product-tag">Veterinary</span>
+          <div class="rx-card-note">Veterinary prescription may be required. For supply to licensed veterinarians and authorised distributors only.</div>
+        <span class="product-tag">Veterinary</span>
         </div>
       </div>
       <div class="product-card reveal" data-cat="veterinary">
@@ -815,10 +862,12 @@ footer { background:var(--blue-dark); padding:80px 5% 40px; }
           <img src="../images/chemifarma.png" onerror="this.style.display='none';this.parentElement.innerHTML='💉';this.parentElement.style.fontSize='2rem'" alt="Tiam – OXI" onerror="this.style.display='none'">
         </div>
         <div class="product-card-body">
+          <span class="rx-badge">℞ PRESCRIPTION ONLY</span>
           <div class="product-category">💉 Veterinary</div>
           <div class="product-name">Tiam – OXI</div>
           <div class="product-desc">Combined tiamulin and oxytetracycline antibiotic premix for the treatment of respiratory and enteric diseases in swine and poultry.</div>
-          <span class="product-tag">Veterinary</span>
+          <div class="rx-card-note">Veterinary prescription may be required. For supply to licensed veterinarians and authorised distributors only.</div>
+        <span class="product-tag">Veterinary</span>
         </div>
       </div>
       <div class="product-card reveal" data-cat="veterinary">
@@ -826,10 +875,12 @@ footer { background:var(--blue-dark); padding:80px 5% 40px; }
           <img src="../images/FLumechina.png" onerror="this.style.display='none';this.parentElement.innerHTML='💉';this.parentElement.style.fontSize='2rem'" alt="Flumechina 50%" onerror="this.style.display='none'">
         </div>
         <div class="product-card-body">
+          <span class="rx-badge">℞ PRESCRIPTION ONLY</span>
           <div class="product-category">💉 Veterinary</div>
           <div class="product-name">Flumechina 50%</div>
           <div class="product-desc">Flumequine antibiotic premix at 50% concentration for the treatment of enteric and respiratory bacterial infections in production animals.</div>
-          <span class="product-tag">Veterinary</span>
+          <div class="rx-card-note">Veterinary prescription may be required. For supply to licensed veterinarians and authorised distributors only.</div>
+        <span class="product-tag">Veterinary</span>
         </div>
       </div>
       <div class="product-card reveal" data-cat="veterinary">
@@ -837,10 +888,12 @@ footer { background:var(--blue-dark); padding:80px 5% 40px; }
           <img src="../images/Trimethoprim.png" onerror="this.style.display='none';this.parentElement.innerHTML='💉';this.parentElement.style.fontSize='2rem'" alt="Trimetoprim 40 Sulfadimetossina 200" onerror="this.style.display='none'">
         </div>
         <div class="product-card-body">
+          <span class="rx-badge">℞ PRESCRIPTION ONLY</span>
           <div class="product-category">💉 Veterinary</div>
           <div class="product-name">Trimetoprim 40 Sulfadimetossina 200</div>
           <div class="product-desc">Combination sulfonamide-trimethoprim antibiotic premix for broad-spectrum antibacterial treatment in poultry and swine.</div>
-          <span class="product-tag">Veterinary</span>
+          <div class="rx-card-note">Veterinary prescription may be required. For supply to licensed veterinarians and authorised distributors only.</div>
+        <span class="product-tag">Veterinary</span>
         </div>
       </div>
       <div class="product-card reveal" data-cat="poultry">
@@ -1231,5 +1284,97 @@ footer { background:var(--blue-dark); padding:80px 5% 40px; }
   </div>
 </footer>
 <script src="../js/main.js"></script>
+<script>
+(function() {
+  var STORAGE_KEY = 'agromedica_prof_verify';
+  var EXPIRY_DAYS = 30;
+
+  function getStored() {
+    try {
+      var raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return null;
+      var data = JSON.parse(raw);
+      var age = Date.now() - data.ts;
+      if (age > EXPIRY_DAYS * 24 * 60 * 60 * 1000) return null;
+      return data.status; // 'yes' or 'no'
+    } catch (e) { return null; }
+  }
+
+  function setStored(status) {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ status: status, ts: Date.now() }));
+    } catch (e) {}
+  }
+
+  function applyRestriction(isProfessional) {
+    var vetTab = document.querySelector('.filter-btn[data-cat="veterinary"]');
+    var vetCards = document.querySelectorAll('.product-card[data-cat="veterinary"]');
+    var grid = document.querySelector('.products-grid');
+
+    if (isProfessional) {
+      // Full access — ensure nothing is hidden/removed
+      if (vetTab) { vetTab.style.display = ''; vetTab.classList.remove('is-restricted'); }
+      vetCards.forEach(function(c) { c.style.display = ''; });
+      var existingNotice = document.getElementById('rxRestrictedNotice');
+      if (existingNotice) existingNotice.remove();
+      return;
+    }
+
+    // Not a professional: hide veterinary tab + cards, show a restricted notice once
+    if (vetTab) { vetTab.style.display = 'none'; }
+    vetCards.forEach(function(c) { c.style.display = 'none'; });
+
+    if (grid && !document.getElementById('rxRestrictedNotice')) {
+      var notice = document.createElement('div');
+      notice.className = 'rx-restricted-notice';
+      notice.id = 'rxRestrictedNotice';
+      notice.innerHTML = 'Some products in our range are prescription veterinary medicinal products and are not displayed to the general public, in accordance with EU advertising regulations. If you are a veterinarian, farmer with professional accreditation, or authorised distributor, please <a href="contact.html">contact our technical team</a> for details.';
+      grid.appendChild(notice);
+    }
+  }
+
+  function showGate() {
+    var overlay = document.getElementById('profGateOverlay');
+    if (overlay) overlay.style.display = 'flex';
+  }
+
+  function hideGate() {
+    var overlay = document.getElementById('profGateOverlay');
+    if (overlay) overlay.style.display = 'none';
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var stored = getStored();
+
+    if (stored === 'yes') {
+      applyRestriction(true);
+    } else if (stored === 'no') {
+      applyRestriction(false);
+    } else {
+      // No valid stored choice — default to restricted view while gate is shown
+      applyRestriction(false);
+      showGate();
+    }
+
+    var yesBtn = document.getElementById('profGateYes');
+    var noBtn = document.getElementById('profGateNo');
+
+    if (yesBtn) {
+      yesBtn.addEventListener('click', function() {
+        setStored('yes');
+        applyRestriction(true);
+        hideGate();
+      });
+    }
+    if (noBtn) {
+      noBtn.addEventListener('click', function() {
+        setStored('no');
+        applyRestriction(false);
+        hideGate();
+      });
+    }
+  });
+})();
+</script>
 </body>
 </html>
